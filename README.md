@@ -23,8 +23,10 @@ Get the artefact and the POM file in the *artefact* folder.
 ## Logging
 The Melior logging system replaces the Logback logging system that comes with Spring Boot by default, and provides up to 20% better throughput than Logback.
 
-<img src="https://github.com/MeliorArtefacts/service-harness-core/blob/main/pics/logging_performance.png"/>
+<img src="https://github.com/MeliorArtefacts/service-harness-core/blob/main/pics/logging_performance.png"/>  
+[measured in log entries per second; 10 runs of 1,000,000 identical size log entries each]
 
+&nbsp;  
 All the Spring Boot logging is muted and is overlaid with logging that developers and operations teams need to see, for example the statistics and activity of the connection pools that are used by the Melior modules, the timing of web requests and of JDBC calls to the database, and glimpses into the CPU usage and memory usage of the application.
 
 The logging system is auto-configured from the application properties.  The **service.name** property is mandatory when the **logging.file.path** property is used.  In this scenario the **service.name** property is used to name the log files.
