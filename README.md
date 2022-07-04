@@ -138,7 +138,7 @@ Various utilities are available, most of which are used in the Melior modules th
 |`org.melior.util.thread`|Lightweight daemon threads, thread control|
 |`org.melior.util.time`|Date parser/formatter, timers|
 
+&nbsp;  
 ## References
-[**Melior Service Harness :: JDBC**](https://github.com/MeliorArtefacts/service-harness-jdbc) - JDBC data source and data access object.
+[**Melior Service Harness :: JDBC**](https://github.com/MeliorArtefacts/service-harness-jdbc) - JDBC data source and data access object.  
 [**Melior Service Harness :: Web : Rest**](https://github.com/MeliorArtefacts/service-harness-web-rest) - REST client and REST service harness.
-
