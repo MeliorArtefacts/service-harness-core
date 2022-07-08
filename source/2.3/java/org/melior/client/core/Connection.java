@@ -19,6 +19,7 @@ import org.melior.client.pool.ConnectionPool;
 import org.melior.logging.core.Logger;
 import org.melior.logging.core.LoggerFactory;
 import org.melior.service.exception.ExceptionType;
+import org.melior.util.object.ObjectUtil;
 import org.melior.util.time.Timer;
 
 /**
@@ -48,7 +49,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
 
     private Thread ownerThread;
 
-    private Throwable lastException;
+    protected Throwable lastException;
 
     protected P delegate;
 
@@ -58,14 +59,11 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
    * Constructor.
    * @param configuration The client configuration
    * @param connectionPool The connection pool
-   * @param clazz The proxy class
    * @throws RemotingException if an error occurs during the construction
    */
-  @SuppressWarnings("unchecked")
   public Connection(
     final C configuration,
-    final ConnectionPool<C, T, P> connectionPool,
-    final Class clazz) throws RemotingException{
+    final ConnectionPool<C, T, P> connectionPool) throws RemotingException{
         super();
 
         this.configuration = configuration;
@@ -84,14 +82,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
 
         delegate = null;
 
-    try{
-            proxy = (P) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-        new Class[] {clazz}, this);
-    }
-    catch (Exception exception){
-      throw new RemotingException(ExceptionType.LOCAL_APPLICATION, "Failed to create connection proxy: " + exception.getMessage(), exception);
-    }
-
+        proxy = null;
   }
 
   /**
@@ -149,7 +140,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
    * @return true if the connection is still valid, false otherwise
    */
   public boolean isValid(
-    final boolean bla){
+    final boolean fullValidation){
 
         if (lastException != null){
       return false;
@@ -162,6 +153,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
    * Open connection.
    * @throws SQLException when the open attempt fails
    */
+  @SuppressWarnings("unchecked")
   public void open() throws RemotingException{
         String methodName = "open";
     Timer timer;
@@ -173,6 +165,14 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
       logger.debug(methodName, "Connection [", connectionDescriptor, "] attempting to open.  URL = ", configuration.getUrl());
 
             delegate = openConnection();
+
+      try{
+                proxy = (P) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
+          ObjectUtil.getAllInterfaces(delegate.getClass()), this);
+      }
+      catch (Exception exception){
+        throw new RemotingException(ExceptionType.LOCAL_APPLICATION, "Failed to create connection proxy: " + exception.getMessage(), exception);
+      }
 
             duration = timer.elapsedTime(TimeUnit.MILLISECONDS);
 

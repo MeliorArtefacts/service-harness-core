@@ -7,6 +7,8 @@
     Service Harness
 */
 package org.melior.util.object;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 /**
  * Utility functions that apply to all objects.
@@ -78,6 +80,49 @@ public interface ObjectUtil{
   public static <T> Object[] collect(
     final T... objects){
     return objects;
+  }
+
+  /**
+   * Get all interfaces of given class.
+   * @param clazz The class
+   * @return The array of interfaces
+   */
+  public static Class<?>[] getAllInterfaces(
+    final Class<?> clazz){
+        HashSet<Class<?>> interfaceSet;
+
+        interfaceSet = new LinkedHashSet<Class<?>>();
+
+        getAllInterfaces(interfaceSet, clazz);
+
+        return interfaceSet.toArray(new Class[interfaceSet.size()]);
+  }
+
+  /**
+   * Get all interfaces of given class.
+   * @param interfaceSet The interface set
+   * @param clazz The class
+   */
+  public static void getAllInterfaces(
+    final HashSet<Class<?>> interfaceSet,
+    final Class<?> clazz){
+        Class<?> cls = clazz;
+    Class<?>[] interfaces;
+
+        while (cls != null){
+            interfaces = cls.getInterfaces();
+
+            for (Class<?> i : interfaces){
+
+                if (interfaceSet.add(i) == true){
+                    getAllInterfaces(interfaceSet, i);
+        }
+
+      }
+
+            cls = cls.getSuperclass();
+    }
+
   }
 
 }
