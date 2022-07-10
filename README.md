@@ -147,3 +147,5 @@ Various utilities are available, most of which are used in the Melior modules th
 [**Melior Service Harness :: Mongo**](https://github.com/MeliorArtefacts/service-harness-mongo) - MongoDB client, MongoDB listener and MongoDB service harness.  
 [**Melior Service Harness :: LDAP**](https://github.com/MeliorArtefacts/service-harness-ldap) - LDAP client.  
 [**Melior Service Harness :: JMS : ActiveMQ**](https://github.com/MeliorArtefacts/service-harness-jms-activemq) - ActiveMQ client.  
+[**Melior Service Harness :: AMQP : RabbitMQ**](https://github.com/MeliorArtefacts/service-harness-amqp-rabbitmq) - RabbitMQ client.  
+[**Melior Service Harness :: Legacy : CORBA**](https://github.com/MeliorArtefacts/service-harness-legacy-corba) - Legacy CORBA client.  
