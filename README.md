@@ -129,10 +129,10 @@ Various utilities are available, most of which are used in the Melior modules th
 
 |Package|Highlights|
 |:---|:---|
-|`org.melior.util.cache`|A bounded LRU cache, a bounded timed cache|
+|`org.melior.util.cache`|A bounded LRU cache, a bounded timed cache, an auto-refresh cache|
 |`org.melior.util.collection`|Blocking queues|
 |`org.melior.util.number`|Counters, clamp functions|
-|`org.melior.util.object`|Coalesce functions, collect objects into arrays|
+|`org.melior.util.object`|Coalesce functions, collect objects into arrays, convert arrays and lists|
 |`org.melior.util.resilience`|Retry method calls|
 |`org.melior.util.semaphore`|A gate to coordinate thread interactions|
 |`org.melior.util.serialize`|Serialize and deserialize POJOs|
