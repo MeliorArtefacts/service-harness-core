@@ -50,4 +50,18 @@ public interface Cache{
     return new TimedCache<K, V>(capacity, lifetime, timeUnit);
   }
 
+  /**
+   * Get instance of auto-refresh cache.
+   * @param cacheLoader The cache loader
+   * @param lifetime The lifetime of the cache entries
+   * @param timeUnit The time unit of the lifetime
+   * @return The cache
+   */
+  public static <K, V> AutoRefreshCache<K, V> ofAutoRefresh(
+    final CacheLoader<K, V> cacheLoader,
+    final long lifetime,
+    final TimeUnit timeUnit){
+    return new AutoRefreshCache<K, V>(cacheLoader, lifetime, timeUnit);
+  }
+
 }

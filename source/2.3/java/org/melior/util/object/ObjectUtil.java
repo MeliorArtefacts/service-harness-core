@@ -7,8 +7,10 @@
     Service Harness
 */
 package org.melior.util.object;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Utility functions that apply to all objects.
@@ -123,6 +125,70 @@ public interface ObjectUtil{
             cls = cls.getSuperclass();
     }
 
+  }
+
+  /**
+   * Convert from one type of array to another.
+   * @param array The input array
+   * @param clazz The output element type
+   * @param converter The element converter
+   * @return The output array
+   */
+  @SuppressWarnings("unchecked")
+  public static <T, U> U[] convertArray(
+    final T[] array,
+    final Class<U> clazz,
+    final Converter<T, U> converter){
+        U[] result;
+
+        if (array == null){
+      return null;
+    }
+
+        result = (U[]) java.lang.reflect.Array.newInstance(clazz, array.length);
+
+    for (int i = 0; i < array.length; i++){
+      result[i] = converter.convert(array[i]);
+    }
+
+    return result;
+  }
+
+  /**
+   * Convert from one type of list to another.
+   * @param list The input list
+   * @param clazz The output element type
+   * @param converter The element converter
+   * @return The output list
+   */
+  public static <T, U> List<U> convertList(
+    final List<T> list,
+    final Class<U> clazz,
+    final Converter<T, U> converter){
+        List<U> result;
+
+        if (list == null){
+      return null;
+    }
+
+        result = new ArrayList<U>(list.size());
+
+    for (T element : list){
+      result.add(converter.convert(element));
+    }
+
+    return result;
+  }
+
+  /**
+   * Ensures that the returned list is never null.  If the input list
+   * is null then a new list is created.
+   * @param list The input list
+   * @return The input list, or a new list if the input list is null
+   */
+  public static <T> List<T> nonNull(
+    final List<T> list){
+    return (list == null) ? new ArrayList<T>() : list;
   }
 
 }

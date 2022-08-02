@@ -7,12 +7,18 @@
     Service Harness
 */
 package org.melior.util.thread;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import org.melior.context.transaction.TransactionContext;
+import org.melior.util.number.Clamp;
+import org.melior.util.time.Timer;
 
 /**
  * Implements a pool of daemon threads that don't hold up the JVM when
@@ -45,8 +51,17 @@ public class DaemonThreadPool{
   }
 
   /**
+   * Get instance of daemon thread pool.
+   * @return The daemon thread pool
+   */
+  public static DaemonThreadPool of(){
+    return new DaemonThreadPool();
+  }
+
+  /**
    * Use thread to execute given callable.
    * @param callable The callable to execute
+   * @return The future for the callable
    */
   public <T> Future<T> execute(
     final Callable<T> callable){
@@ -62,6 +77,7 @@ public class DaemonThreadPool{
    * <li>The transaction identifier
    * </ul><p>
    * @param callable The callable to execute
+   * @return The future for the callable
    */
   public <T> Future<T> executeAsChild(
     final Callable<T> callable){
@@ -89,23 +105,72 @@ public class DaemonThreadPool{
   }
 
   /**
-   * Execute given callable.
-   * @param callable The callable to execute
-   * @param timeout The time to wait in milliseconds
+   * Use child threads to execute given callables.
+   * The children inherits the following parameters from the
+   * transaction context of the caller.
+   * <p><ul>
+   * <li>The origin identifier
+   * <li>The transaction identifier
+   * </ul><p>
+   * @param timeout The maximum amount of time to wait
+   * @param timeUnit The time unit of the timeout
+   * @param postProcessor The callback to call if a callable has produced a result
+   * @param errorProcessor The callback to call if a callable has failed with an exception
+   * @param callables The callables to execute
    */
-  public <T> Future<T> execute(
-    final Callable<T> callable,
-    final long timeout){
-        return null;
+  @SafeVarargs
+  public final <V> void executeAsChild(
+    final long timeout,
+    final TimeUnit timeUnit,
+    final Consumer<V> postProcessor,
+    final Consumer<Throwable> errorProcessor,
+    final Callable<V>...callables){
+        long remainingTime;
+    Timer timer;
+    List<Future<V>> futures;
+    V result;
+
+        remainingTime = timeUnit.toMillis(timeout);
+
+        timer = Timer.ofMillis().start();
+
+        futures = new ArrayList<Future<V>>(callables.length);
+
+        for (Callable<V> callable : callables){
+      futures.add(executeAsChild(callable));
+    }
+
+        for (Future<V> future : futures){
+
+      try{
+                result = future.get(Clamp.clampLong(remainingTime - timer.elapsedTime(), 0, Long.MAX_VALUE), TimeUnit.MILLISECONDS);
+
+                if (postProcessor != null){
+                    postProcessor.accept(result);
+        }
+
+      }
+      catch (java.lang.Throwable exception){
+                future.cancel(true);
+
+                if (errorProcessor != null){
+                    errorProcessor.accept(exception);
+        }
+
+      }
+
+    }
+
   }
 
   /**
    * Use thread to execute given runnable.
    * @param runnable The runnable to execute
+   * @return The future for the callable
    */
-  public void execute(
+  public Future<?> execute(
     final Runnable runnable){
-        executor.submit(runnable);
+        return executor.submit(runnable);
   }
 
   /**
@@ -117,8 +182,9 @@ public class DaemonThreadPool{
    * <li>The transaction identifier
    * </ul><p>
    * @param runnable The runnable to execute
+   * @return The future for the callable
    */
-  public void executeAsChild(
+  public Future<?> executeAsChild(
     final Runnable runnable){
         TransactionContext callerContext;
     String originId;
@@ -128,7 +194,7 @@ public class DaemonThreadPool{
     originId = callerContext.getOriginId();
     transactionId = callerContext.getTransactionId();
 
-        executor.submit(new Runnable(){
+        return executor.submit(new Runnable(){
 
       public void run(){
                 TransactionContext childContext;
@@ -144,13 +210,54 @@ public class DaemonThreadPool{
   }
 
   /**
-   * Execute given runnable.
-   * @param runnable The runnable to execute
-   * @param timeout The time to wait in milliseconds
+   * Use child threads to execute given runnables.
+   * The children inherits the following parameters from the
+   * transaction context of the caller.
+   * <p><ul>
+   * <li>The origin identifier
+   * <li>The transaction identifier
+   * </ul><p>
+   * @param timeout The maximum amount of time to wait
+   * @param timeUnit The time unit of the timeout
+   * @param errorProcessor The callback to call if a runnable has failed with an exception
+   * @param runnables The runnables to execute
    */
-  public void execute(
-    final Runnable runnable,
-    final long timeout){
+  @SafeVarargs
+  public final void executeAsChild(
+    final long timeout,
+    final TimeUnit timeUnit,
+    final Consumer<Throwable> errorProcessor,
+    final Runnable...runnables){
+        long remainingTime;
+    Timer timer;
+    List<Future<?>> futures;
+
+        remainingTime = timeUnit.toMillis(timeout);
+
+        timer = Timer.ofMillis().start();
+
+        futures = new ArrayList<Future<?>>(runnables.length);
+
+        for (Runnable runnable : runnables){
+      futures.add(executeAsChild(runnable));
+    }
+
+        for (Future<?> future : futures){
+
+      try{
+                future.get(Clamp.clampLong(remainingTime - timer.elapsedTime(), 0, Long.MAX_VALUE), TimeUnit.MILLISECONDS);
       }
+      catch (java.lang.Throwable exception){
+                future.cancel(true);
+
+                if (errorProcessor != null){
+                    errorProcessor.accept(exception);
+        }
+
+      }
+
+    }
+
+  }
 
 }
