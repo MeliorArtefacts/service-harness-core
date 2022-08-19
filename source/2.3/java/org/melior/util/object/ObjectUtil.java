@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 
+import org.melior.service.exception.ApplicationException;
+import org.melior.service.exception.ExceptionType;
+
 /**
  * Utility functions that apply to all objects.
  * @author Melior
@@ -181,12 +184,28 @@ public interface ObjectUtil{
   }
 
   /**
-   * Ensures that the returned list is never null.  If the input list
-   * is null then a new list is created.
+   * Require the object to not be {@code null}.  If the object is
+   * {@code null} then an exception is raised with the message.
+   * @param obj The object
+   * @param message The message
+   */
+  public static <T> void requireNonNull(
+    final T obj,
+    final String message) throws ApplicationException{
+
+        if (obj == null){
+            throw new ApplicationException(ExceptionType.LOCAL_APPLICATION, message);
+    }
+
+  }
+
+  /**
+   * Ensures that the returned list is never {@code null}.  If the input list
+   * is {@code null} then a new list is created.
    * @param list The input list
    * @return The input list, or a new list if the input list is null
    */
-  public static <T> List<T> nonNull(
+  public static <T> List<T> ensureNonNull(
     final List<T> list){
     return (list == null) ? new ArrayList<T>() : list;
   }
