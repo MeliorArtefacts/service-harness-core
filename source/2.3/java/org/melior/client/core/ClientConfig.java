@@ -10,6 +10,7 @@ package org.melior.client.core;
 import org.melior.service.exception.ApplicationException;
 import org.melior.service.exception.ExceptionType;
 import org.melior.util.number.Clamp;
+import org.springframework.core.io.Resource;
 
 /**
  * Common configuration parameters used by remoting clients.
@@ -24,6 +25,20 @@ public class ClientConfig{
     private String username;
 
     private String password;
+
+    private Resource keyStore;
+
+    private String keyStoreType;
+
+    private String keyStorePassword;
+
+    private String keyPassword;
+
+     private Resource trustStore;
+
+    private String trustStoreType;
+
+    private String trustStorePassword;
 
     private int minimumConnections = 0;
 
@@ -67,6 +82,13 @@ public class ClientConfig{
     this.url = clientConfig.url;
     this.username = clientConfig.username;
     this.password = clientConfig.password;
+    this.keyStore = clientConfig.keyStore;
+    this.keyStoreType = clientConfig.keyStoreType;
+    this.keyStorePassword = clientConfig.keyStorePassword;
+    this.keyPassword = clientConfig.keyPassword;
+    this.trustStore = clientConfig.trustStore;
+    this.trustStoreType = clientConfig.trustStoreType;
+    this.trustStorePassword = clientConfig.trustStorePassword;
     this.minimumConnections = clientConfig.minimumConnections;
     this.maximumConnections = clientConfig.maximumConnections;
     this.connectionTimeout = clientConfig.connectionTimeout;
@@ -151,6 +173,125 @@ public class ClientConfig{
     this.password = password;
   }
  
+  /**
+   * Get key store path.
+   * @return The key store path
+   */
+  public Resource getKeyStore(){
+    return keyStore;
+  }
+
+  /**
+   * Set key store path.
+   * @param keyStore The key store path
+   */
+  public void setKeyStore(
+    final Resource keyStore){
+    this.keyStore = keyStore;
+  }
+
+  /**
+   * Get key store type.
+   * @return The key store type
+   */
+  public String getKeyStoreType(){
+    return keyStoreType;
+  }
+
+  /**
+   * Set key store type.
+   * @param keyStoreType The key store type
+   */
+  public void setKeyStoreType(
+    final String keyStoreType){
+    this.keyStoreType = keyStoreType;
+  }
+
+  /**
+   * Get key store password.
+   * @return The key store password
+   */
+  public String getKeyStorePassword(){
+    return keyStorePassword;
+  }
+
+  /**
+   * Set key store password.
+   * @param keyStorePassword The key store password
+   */
+  public void setKeyStorePassword(
+    final String keyStorePassword){
+    this.keyStorePassword = keyStorePassword;
+  }
+
+  /**
+   * Get key password.
+   * @return The key password
+   */
+  public String getKeyPassword(){
+    return keyPassword;
+  }
+
+  /**
+   * Set key password.
+   * @param keyPassword The key password
+   */
+  public void setKeyPassword(
+    final String keyPassword){
+    this.keyPassword = keyPassword;
+  }
+
+  /**
+   * Get trust store path.
+   * @return The trust store path
+   */
+  public Resource getTrustStore(){
+    return trustStore;
+  }
+
+  /**
+   * Set trust store path.
+   * @param trustStore The trust store path
+   */
+  public void setTrustStore(
+    final Resource trustStore){
+    this.trustStore = trustStore;
+  }
+
+  /**
+   * Get trust store type.
+   * @return The trust store type
+   */
+  public String getTrustStoreType(){
+    return trustStoreType;
+  }
+
+  /**
+   * Set trust store type.
+   * @param trustStoreType The trust store type
+   */
+  public void setTrustStoreType(
+    final String trustStoreType){
+    this.trustStoreType = trustStoreType;
+  }
+
+  /**
+   * Get trust store password.
+   * @return The trust store password
+   */
+  public String getTrustStorePassword(){
+    return trustStorePassword;
+  }
+
+  /**
+   * Set trust store password.
+   * @param trustStorePassword The trust store password
+   */
+  public void setTrustStorePassword(
+    final String trustStorePassword){
+    this.trustStorePassword = trustStorePassword;
+  }
+
   /**
    * Get minimum number of connections.
    * @return The minimum number of connections

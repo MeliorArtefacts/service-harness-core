@@ -9,7 +9,9 @@
 package org.melior.client.exception;
 
 /**
- * TODO
+ * Captures an exception that occurred in a remoting client while opening a new connection
+ * or while executing a remoting request.  If the calling object is a managed client object
+ * then the exception is propagated to the client objects parent.
  * @since 2.3
  */
 public interface ExceptionTarget {

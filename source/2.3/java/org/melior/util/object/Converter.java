@@ -9,7 +9,7 @@
 package org.melior.util.object;
 
 /**
- * TODO
+ * Converts from one type of object to another.
  * @author Melior
  * @since 2.3
  */

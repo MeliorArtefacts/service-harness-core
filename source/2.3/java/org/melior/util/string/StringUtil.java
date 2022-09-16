@@ -8,7 +8,9 @@
 */
 package org.melior.util.string;
 import java.util.Collection;
-import java.util.Iterator;
+
+import org.melior.service.exception.ApplicationException;
+import org.melior.service.exception.ExceptionType;
 import org.springframework.util.StringUtils;
 
 /**
@@ -17,14 +19,7 @@ import org.springframework.util.StringUtils;
  * @author Melior
  * @since 2.0
  */
-public class StringUtil{
-
-  /**
-   * Constructor.
-   */
-  private StringUtil(){
-        super();
-  }
+public interface StringUtil{
 
   /**
    * Return substring of string.
@@ -150,6 +145,17 @@ public class StringUtil{
     }
 
         return join(components);
+  }
+
+  /**
+   * Convert string to character array.
+   * If the string is {@code null} the result is {@code null}.
+   * @param string The string
+   * @return The character array
+   */
+  public static char[] toCharArray(
+    final String string){
+    return (string == null) ? null : string.toCharArray();
   }
 
   /**
@@ -289,11 +295,11 @@ public class StringUtil{
   }
 
   /**
-   * Check whether string has postfix.
+   * Check whether string has post-fix.
    * If the string is {@code null} the result is {@code false}.
    * @param string The string
-   * @param postfix The postfix
-   * @return true if the string has the postfix, false otherwise
+   * @param postfix The post-fix
+   * @return true if the string has the post-fix, false otherwise
    */
   public static boolean endsWith(
     final String string,
@@ -327,13 +333,18 @@ public class StringUtil{
 
   /**
    * Join {@code String} representation of objects together.
+   * If the array of objects is {@code null} the result is {@code null}.
    * @param objects The array of objects
-   * @return The delimited string
+   * @return The concatenated string
    */
   @SafeVarargs
   public static <T> String join(
     final T... objects){
         StringBuilder stringBuilder;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
@@ -346,13 +357,18 @@ public class StringUtil{
 
   /**
    * Join compact {@code String} representation of objects together.
+   * If the array of objects is {@code null} the result is {@code null}.
    * @param objects The array of objects
-   * @return The delimited string
+   * @return The concatenated string
    */
   @SafeVarargs
   public static <T extends CompactString> String joinCompact(
     final T... objects){
         StringBuilder stringBuilder;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
@@ -365,18 +381,22 @@ public class StringUtil{
 
   /**
    * Join {@code String} representation of objects together.
+   * If the list of objects is {@code null} the result is {@code null}.
    * @param objects The list of objects
-   * @return The delimited string
+   * @return The concatenated string
    */
   public static <T> String join(
     final Collection<T> objects){
         StringBuilder stringBuilder;
-    Iterator<T> iterator;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
-    for (iterator = objects.iterator(); iterator.hasNext() == true;){
-      stringBuilder.append(iterator.next());
+    for (T object : objects){
+      stringBuilder.append(object);
     }
 
     return stringBuilder.toString();
@@ -384,18 +404,22 @@ public class StringUtil{
 
   /**
    * Join compact {@code String} representation of objects together.
+   * If the list of objects is {@code null} the result is {@code null}.
    * @param objects The list of objects
-   * @return The delimited string
+   * @return The concatenated string
    */
   public static <T extends CompactString> String joinCompact(
     final Collection<T> objects){
         StringBuilder stringBuilder;
-    Iterator<T> iterator;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
-    for (iterator = objects.iterator(); iterator.hasNext() == true;){
-      stringBuilder.append(iterator.next().toCompactString());
+    for (T object : objects){
+      stringBuilder.append(object.toCompactString());
     }
 
     return stringBuilder.toString();
@@ -403,6 +427,7 @@ public class StringUtil{
 
   /**
    * Join {@code String} representation of objects together with delimiter in between.
+   * If the array of objects is {@code null} the result is {@code null}.
    * @param objects The array of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -411,6 +436,10 @@ public class StringUtil{
     final T[] objects,
     final String delimiter){
         StringBuilder stringBuilder;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
@@ -428,6 +457,7 @@ public class StringUtil{
 
   /**
    * Join compact {@code String} representation of objects together with delimiter in between.
+   * If the array of objects is {@code null} the result is {@code null}.
    * @param objects The array of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -436,6 +466,10 @@ public class StringUtil{
     final T[] objects,
     final String delimiter){
         StringBuilder stringBuilder;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
@@ -453,6 +487,7 @@ public class StringUtil{
 
   /**
    * Join {@code String} representation of objects together with delimiter in between.
+   * If the list of objects is {@code null} the result is {@code null}.
    * @param objects The list of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -462,19 +497,22 @@ public class StringUtil{
     final String delimiter){
         StringBuilder stringBuilder;
     int index;
-    Iterator<T> iterator;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
         index = 0;
 
-    for (iterator = objects.iterator(); iterator.hasNext() == true;){
+    for (T object : objects){
 
       if (index > 0){
         stringBuilder.append(delimiter);
       }
 
-      stringBuilder.append(iterator.next());
+      stringBuilder.append(object);
 
       index++;
     }
@@ -484,6 +522,7 @@ public class StringUtil{
 
   /**
    * Join compact {@code String} representation of objects together with delimiter in between.
+   * If the list of objects is {@code null} the result is {@code null}.
    * @param objects The list of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -493,19 +532,22 @@ public class StringUtil{
     final String delimiter){
         StringBuilder stringBuilder;
     int index;
-    Iterator<T> iterator;
+
+        if (objects == null){
+      return null;
+    }
 
         stringBuilder = new StringBuilder();
 
         index = 0;
 
-    for (iterator = objects.iterator(); iterator.hasNext() == true;){
+    for (T object : objects){
 
       if (index > 0){
         stringBuilder.append(delimiter);
       }
 
-      stringBuilder.append(iterator.next().toCompactString());
+      stringBuilder.append(object.toCompactString());
 
       index++;
     }
@@ -514,17 +556,17 @@ public class StringUtil{
   }
 
   /**
-   * Replace all occurrences of target in string.  If the string is {@code null}
-   * the result is {@code null}.  If the target is {@code null} or the replacement is
+   * Replace all occurrences of substring in string.  If the string is {@code null}
+   * the result is {@code null}.  If the substring is {@code null} or the replacement is
    * {@code null}, the string will remain unchanged.
    * @param string The string
-   * @param target The target
+   * @param substring The substring
    * @param replacement The replacement
    * @return The result string
    */
   public static String replaceAll(
     final String string,
-    final String target,
+    final String substring,
     final String replacement){
         StringBuilder stringBuilder;
 
@@ -532,22 +574,22 @@ public class StringUtil{
       return string;
     }
 
-        if (contentEqual(target, replacement) == true){
+        if (contentEqual(substring, replacement) == true){
       return string;
     }
 
         stringBuilder = new StringBuilder(string);
-    replaceAll(stringBuilder, target, replacement);
+    replaceAll(stringBuilder, substring, replacement);
 
     return stringBuilder.toString();
   }
 
   /**
-   * Replace all occurrences of target in {@code StringBuilder}.  If the {@code StringBuilder}
-   * is {@code null} the result is {@code null}.  If the target is {@code null} or the replacement
+   * Replace all occurrences of substring in {@code StringBuilder}.  If the {@code StringBuilder}
+   * is {@code null} the result is {@code null}.  If the substring is {@code null} or the replacement
    * is {@code null}, the {@code StringBuilder} will remain unchanged.
    * @param stringBuilder The string builder
-   * @param target The target
+   * @param substring The substring
    * @param replacement The replacement
    * @return The result string
    */
@@ -569,6 +611,22 @@ public class StringUtil{
       stringBuilder.replace(index, end, replacement);
       end = (index + replacement.length());
       index = stringBuilder.indexOf(substring, end);
+    }
+
+  }
+
+  /**
+   * Require string to not be {@code null} and not be empty.  If the string is
+   * {@code null} or is empty then an exception is raised with the message.
+   * @param obj The object
+   * @param message The message
+   */
+  public static void requireNonEmpty(
+    final String string,
+    final String message) throws ApplicationException{
+
+        if ((string == null) || (string.length() == 0)){
+            throw new ApplicationException(ExceptionType.LOCAL_APPLICATION, message);
     }
 
   }

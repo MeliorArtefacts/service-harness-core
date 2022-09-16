@@ -9,7 +9,8 @@
 package org.melior.service.work;
 
 /**
- * TODO
+ * Process a single item.  If the item is a managed item then a {@code Throwable} must be thrown
+ * when the processing fails, to ensure that the item is correctly managed.
  * @author Melior
  * @since 2.3
  */

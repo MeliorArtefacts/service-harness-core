@@ -10,7 +10,10 @@ package org.melior.service.work;
 import java.util.List;
 
 /**
- * TODO
+ * Process a batch of items.  The implementer must ensure that processing of the
+ * batch of items either succeeds atomically or fails atomically.  If the items
+ * are managed items then a {@code Throwable} must be thrown when the processing
+ * fails, to ensure that the items are correctly managed.
  * @author Melior
  * @since 2.3
  */

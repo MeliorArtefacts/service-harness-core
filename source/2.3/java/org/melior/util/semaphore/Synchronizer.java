@@ -10,7 +10,7 @@ package org.melior.util.semaphore;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
 /**
- * TODO
+ * Used internally by the simple {@code Semaphore} to manage the permits.
  * @author Melior
  * @since 2.0
  */

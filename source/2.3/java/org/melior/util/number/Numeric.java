@@ -9,18 +9,12 @@
 package org.melior.util.number;
 
 /**
- * TODO
+ * Utility functions that validate numeric {@code String}s or
+ * parse numeric {@code String}s to primitives.
  * @author Melior
  * @since 2.1
  */
-public class Numeric{
-
-  /**
-   * Constructor.
-   */
-  private Numeric(){
-        super();
-  }
+public interface Numeric{
 
   /**
    * Determine whether string is a valid {@code int}.

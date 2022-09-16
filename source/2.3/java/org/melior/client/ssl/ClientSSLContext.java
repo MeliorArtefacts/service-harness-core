@@ -7,19 +7,27 @@
     Service Harness
 */
 package org.melior.client.ssl;
+import java.io.InputStream;
 import java.net.Socket;
+import java.security.KeyStore;
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509ExtendedTrustManager;
-
 import org.melior.client.core.ClientConfig;
+import org.melior.util.object.ObjectUtil;
+import org.melior.util.string.StringUtil;
 
 /**
- * TODO
+ * Instantiates an {@code SSLContext} for use in remoting clients that establish secure
+ * connections to remote services.  The {@code SSLContext} can either be fully trusting
+ * or will require a concrete key store and/or a concrete trust store that is referenced
+ * in the remoting client configuration.
  * @author Melior
  * @since 2.3
  */
@@ -62,7 +70,46 @@ public interface ClientSSLContext{
   public static SSLContext ofKeyStore(
     final String protocol,
     final ClientConfig clientConfig){
-        return null;
+        KeyStore keyStore = null;
+    KeyManagerFactory keyManagerFactory = null;
+    KeyStore trustStore = null;
+    TrustManagerFactory trustManagerFactory;
+    SSLContext sslContext;
+
+    try{
+
+            if (clientConfig.getKeyStore() != null){
+                keyStore = KeyStore.getInstance(ObjectUtil.coalesce(clientConfig.getKeyStoreType(), KeyStore.getDefaultType()));
+
+                try (InputStream inputStream = clientConfig.getKeyStore().getInputStream()){
+          keyStore.load(inputStream, StringUtil.toCharArray(clientConfig.getKeyStorePassword()));
+        }
+
+                keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+        keyManagerFactory.init(keyStore, StringUtil.toCharArray(clientConfig.getKeyPassword()));
+      }
+
+            if (clientConfig.getTrustStore() != null){
+                trustStore = KeyStore.getInstance(ObjectUtil.coalesce(clientConfig.getTrustStoreType(), KeyStore.getDefaultType()));
+
+                try (InputStream inputStream = clientConfig.getTrustStore().getInputStream()){
+          trustStore.load(inputStream, StringUtil.toCharArray(clientConfig.getTrustStorePassword()));
+        }
+
+      }
+
+            trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+      trustManagerFactory.init(trustStore);
+
+            sslContext = SSLContext.getInstance(protocol);
+      sslContext.init((keyManagerFactory == null) ? null : keyManagerFactory.getKeyManagers(),
+        trustManagerFactory.getTrustManagers(), new SecureRandom());
+    }
+    catch (Exception exception){
+      throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
+    }
+
+    return sslContext;
   }
 
 }

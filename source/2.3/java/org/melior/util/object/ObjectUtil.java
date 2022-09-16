@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
-
 import org.melior.service.exception.ApplicationException;
 import org.melior.service.exception.ExceptionType;
 
@@ -184,7 +183,7 @@ public interface ObjectUtil{
   }
 
   /**
-   * Require the object to not be {@code null}.  If the object is
+   * Require object to not be {@code null}.  If the object is
    * {@code null} then an exception is raised with the message.
    * @param obj The object
    * @param message The message
@@ -208,6 +207,33 @@ public interface ObjectUtil{
   public static <T> List<T> ensureNonNull(
     final List<T> list){
     return (list == null) ? new ArrayList<T>() : list;
+  }
+
+  /**
+   * Translate object.  If no option matches the object then the following applies:
+   * if the last option is unary then it is returned as a default translation,
+   * otherwise {@code null} is returned.
+   * @param obj The object
+   * @param options The available options
+   * @return The translation
+   */
+  @SafeVarargs
+  public static <T> T translate(
+    final T obj,
+    final T... options){
+        int length;
+
+        length = (options.length >> 1) << 1;
+
+        for (int i = 0; i < length; i+=2){
+
+            if (options[i].equals(obj) == true){
+                return options[i + 1];
+      }
+
+    }
+
+        return ((options.length % 2) == 1) ? options[options.length - 1] : null;
   }
 
 }

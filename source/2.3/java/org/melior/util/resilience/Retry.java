@@ -19,14 +19,7 @@ import java.util.function.Predicate;
  * @author Melior
  * @since 2.2
  */
-public class Retry{
-
-  /**
-   * Constructor.
-   */
-  private Retry(){
-        super();
-  }
+public interface Retry{
 
   /**
    * Attempt to execute action up to specified number of attempts.

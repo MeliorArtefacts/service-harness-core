@@ -12,7 +12,7 @@ import java.util.List;
 import javax.management.Attribute;
 
 /**
- * TODO
+ * Utility functions that either produce HTTP headers or manipulate HTTP headers.
  * @author Melior
  * @since 2.3
  */
@@ -25,7 +25,7 @@ public class HttpHeader extends Attribute{
    */
   HttpHeader(
     final String name,
-    final  String value){
+    final String value){
         super(name, value);
   }
 

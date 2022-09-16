@@ -18,7 +18,9 @@ import org.melior.util.thread.DaemonThread;
 import org.melior.util.thread.ThreadControl;
 
 /**
- * TODO
+ * Implements an immutable cache with the same dimensions as the source data.  The provided
+ * cache loader is used to seed the cache on first use.  When the entries in the cache expire
+ * then the provided cache loader is used to refresh the cache.
  * @author Melior
  * @since 2.3
  */

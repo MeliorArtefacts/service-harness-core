@@ -13,14 +13,7 @@ package org.melior.util.number;
  * @author Melior
  * @since 2.1
  */
-public class Clamp{
-
-  /**
-   * Constructor.
-   */
-  private Clamp(){
-        super();
-  }
+public interface Clamp{
 
   /**
    * Clamp {@code int} value between minimum and maximum.

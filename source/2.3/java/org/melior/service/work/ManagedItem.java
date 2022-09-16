@@ -11,7 +11,10 @@ package org.melior.service.work;
 import java.io.Serializable;
 
 /**
- * TODO
+ * Transforms an object into a managed item with an identifier and a state.
+ * Implementations that manage items use the identifier to address the item
+ * during persist and restore operations, and maintain the state of the item
+ * to provide retries and other lifecycle functions.
  * @author Melior
  * @since 2.3
  */

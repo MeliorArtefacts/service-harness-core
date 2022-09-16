@@ -230,6 +230,21 @@ public class TransactionContext{
   }
 
   /**
+   * Add argument if argument value is not {@code null}.
+   * @param The argument name
+   * @param The argument value
+   */
+  public void addNonNullArgument(
+    final String name,
+    final String value){
+
+        if (value != null){
+            addArgument(name, value);
+    }
+
+  }
+
+  /**
    * Add argument.
    * @param The argument name
    * @param The argument value

@@ -7,43 +7,18 @@
     Service Harness
 */
 package org.melior.context.transaction;
-import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.Callable;
 
 import org.melior.service.work.BatchProcessor;
 import org.melior.service.work.SingletonProcessor;
+import org.melior.util.resilience.NoReturnCallable;
 
 /**
- * TODO
+ * Create transactional incarnations of processors, callables and runnables.
  * @author Melior
  * @since 2.3
  */
-public class Transactional<T> implements BatchProcessor<T>, SingletonProcessor<T>{
-    private BatchProcessor<T> batchProcessor;
-
-    private SingletonProcessor<T> singletonProcessor;
-
-  /**
-   * Constructor.
-   * @param batchProcessor The batch processor
-   */
-  private Transactional(
-    final BatchProcessor<T> batchProcessor){
-        super();
-
-        this.batchProcessor = batchProcessor;
-  }
-
-  /**
-   * Constructor.
-   * @param singletonProcessor The singleton processor
-   */
-  private Transactional(
-    final SingletonProcessor<T> singletonProcessor){
-        super();
-
-        this.singletonProcessor = singletonProcessor;
-  }
+public interface Transactional<T>{
 
   /**
    * Construct transactional batch processor.
@@ -52,7 +27,7 @@ public class Transactional<T> implements BatchProcessor<T>, SingletonProcessor<T
    */
   public static <T> BatchProcessor<T> ofBatch(
     final BatchProcessor<T> batchProcessor){
-    return new Transactional<T>(batchProcessor);
+    return new BatchTransaction<T>(batchProcessor);
   }
 
   /**
@@ -62,43 +37,37 @@ public class Transactional<T> implements BatchProcessor<T>, SingletonProcessor<T
    */
   public static <T> SingletonProcessor<T> ofSingle(
     final SingletonProcessor<T> singletonProcessor){
-    return new Transactional<T>(singletonProcessor);
+    return new SingletonTransaction<T>(singletonProcessor);
   }
 
   /**
-   * Process batch of items.
-   * @param items The list of items
-   * @throws Throwable if unable to process the batch of items
+   * Construct transactional callable.
+   * @param callable The original callable
+   * @return The transactional callable
    */
-  public void process(
-    final List<T> items) throws Throwable{
-        TransactionContext transactionContext;
-
-        transactionContext = TransactionContext.get();
-    transactionContext.startTransaction();
-    transactionContext.setTransactionId(UUID.randomUUID().toString());
-
-        batchProcessor.process(items);
-
-        transactionContext.reset();
+  public static <T> Callable<T> ofCallable(
+    final Callable<T> callable){
+    return new CallableTransaction<T>(callable);
   }
 
   /**
-   * Process item.
-   * @param item The item
-   * @throws Throwable if unable to process the item
+   * Construct transactional callable.
+   * @param callable The original callable
+   * @return The transactional callable
    */
-  public void process(
-    final T item) throws Throwable{
-        TransactionContext transactionContext;
+  public static <T> NoReturnCallable<T> ofCallable(
+    final NoReturnCallable<T> callable){
+    return new NoReturnCallableTransaction<T>(callable);
+  }
 
-        transactionContext = TransactionContext.get();
-    transactionContext.startTransaction();
-    transactionContext.setTransactionId(UUID.randomUUID().toString());
-
-        singletonProcessor.process(item);
-
-        transactionContext.reset();
+  /**
+   * Construct transactional runnable.
+   * @param runnable The original runnable
+   * @return The transactional runnable
+   */
+  public static <T> Runnable ofRunnable(
+    final Runnable runnable){
+    return new RunnableTransaction(runnable);
   }
 
 }
