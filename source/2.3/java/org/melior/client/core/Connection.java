@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
-import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 import org.melior.client.exception.ExceptionTarget;
 import org.melior.client.exception.RemotingException;
@@ -151,7 +150,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
 
   /**
    * Open connection.
-   * @throws SQLException when the open attempt fails
+   * @throws RemotingException when the open attempt fails
    */
   @SuppressWarnings("unchecked")
   public void open() throws RemotingException{

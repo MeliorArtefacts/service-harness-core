@@ -7,14 +7,13 @@
     Service Harness
 */
 package org.melior.util.semaphore;
-
 import java.util.concurrent.TimeUnit;
 
 /**
  * Provides read-only access to a semaphore.
  * @author Melior
  * @since 2.0
- * @see {@code Semaphore}
+ * @see Semaphore
  */
 public interface ReadOnlySemaphore{
 

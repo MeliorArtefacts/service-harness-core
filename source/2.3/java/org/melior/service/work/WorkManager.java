@@ -23,9 +23,9 @@ import org.springframework.stereotype.Component;
  * the CPU usage and memory usage lenses.
  * @author Melior
  * @since 2.0
- * @see {@code ServiceComponent}
- * @see {@code MemoryLens}
- * @see {@code CPULens}
+ * @see ServiceComponent
+ * @see MemoryLens
+ * @see CPULens
  */
 @Component
 public class WorkManager extends ServiceComponent{

@@ -7,6 +7,8 @@
     Service Harness
 */
 package org.melior.service.lens;
+import java.util.concurrent.TimeUnit;
+
 import org.melior.logging.core.Logger;
 import org.melior.logging.core.LoggerFactory;
 import org.melior.service.core.ServiceState;
@@ -75,7 +77,7 @@ public class MemoryLens{
 
         logger.debug(methodName, "memory: total: ", totalMemory, " | used: ", usedMemory);
 
-                ThreadControl.wait(this, 100);
+                ThreadControl.wait(this, 100, TimeUnit.MILLISECONDS);
       }
       catch (Exception exception){
         logger.error(methodName, "Failed to glimpse memory usage: ", exception.getMessage(), exception);

@@ -8,6 +8,8 @@
 */
 package org.melior.service.lens;
 import java.lang.management.ManagementFactory;
+import java.util.concurrent.TimeUnit;
+
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.MBeanServer;
@@ -94,7 +96,7 @@ public class CPULens{
 
         }
 
-                ThreadControl.wait(this, 100);
+                ThreadControl.wait(this, 100, TimeUnit.MILLISECONDS);
       }
       catch (Exception exception){
         logger.error(methodName, "Failed to glimpse CPU load: ", exception.getMessage(), exception);

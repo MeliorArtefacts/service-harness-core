@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * Implements a simple timer with millisecond precision.
  * @author Melior
  * @since 2.2
- * @see {@code Timer}
+ * @see Timer
  */
 public class MilliTimer implements Timer{
     private long startTime = 0;

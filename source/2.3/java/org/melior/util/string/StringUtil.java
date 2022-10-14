@@ -334,6 +334,7 @@ public interface StringUtil{
   /**
    * Join {@code String} representation of objects together.
    * If the array of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The array of objects
    * @return The concatenated string
    */
@@ -358,6 +359,7 @@ public interface StringUtil{
   /**
    * Join compact {@code String} representation of objects together.
    * If the array of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The array of objects
    * @return The concatenated string
    */
@@ -382,6 +384,7 @@ public interface StringUtil{
   /**
    * Join {@code String} representation of objects together.
    * If the list of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The list of objects
    * @return The concatenated string
    */
@@ -405,6 +408,7 @@ public interface StringUtil{
   /**
    * Join compact {@code String} representation of objects together.
    * If the list of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The list of objects
    * @return The concatenated string
    */
@@ -428,6 +432,7 @@ public interface StringUtil{
   /**
    * Join {@code String} representation of objects together with delimiter in between.
    * If the array of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The array of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -458,6 +463,7 @@ public interface StringUtil{
   /**
    * Join compact {@code String} representation of objects together with delimiter in between.
    * If the array of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The array of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -488,6 +494,7 @@ public interface StringUtil{
   /**
    * Join {@code String} representation of objects together with delimiter in between.
    * If the list of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The list of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -523,6 +530,7 @@ public interface StringUtil{
   /**
    * Join compact {@code String} representation of objects together with delimiter in between.
    * If the list of objects is {@code null} the result is {@code null}.
+   * @param <T> The type
    * @param objects The list of objects
    * @param delimiter The delimiter
    * @return The delimited string
@@ -591,7 +599,6 @@ public interface StringUtil{
    * @param stringBuilder The string builder
    * @param substring The substring
    * @param replacement The replacement
-   * @return The result string
    */
   public static void replaceAll(
     final StringBuilder stringBuilder,
@@ -618,8 +625,9 @@ public interface StringUtil{
   /**
    * Require string to not be {@code null} and not be empty.  If the string is
    * {@code null} or is empty then an exception is raised with the message.
-   * @param obj The object
+   * @param string The string
    * @param message The message
+   * @throws ApplicationException if the string is {@code null} or is empty
    */
   public static void requireNonEmpty(
     final String string,

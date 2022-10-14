@@ -67,6 +67,7 @@ public class ObjectSerializer<T>{
 
   /**
    * Get instance of object serializer.
+   * @param <T> The type
    * @return The object serializer
    */
   public static <T> ObjectSerializer<T> of(){

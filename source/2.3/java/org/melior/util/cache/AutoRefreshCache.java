@@ -124,10 +124,10 @@ public class AutoRefreshCache<K, V>{
         while (ServiceState.isActive() == true){
 
       try{
-                ThreadControl.sleep(lifetime);
+                ThreadControl.sleep(lifetime, TimeUnit.MILLISECONDS);
 
                 while (ServiceState.isSuspended() == true){
-          ThreadControl.sleep(100);
+          ThreadControl.sleep(100, TimeUnit.MILLISECONDS);
         }
 
         logger.debug(methodName, "Refresh cache data.");

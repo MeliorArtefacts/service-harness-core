@@ -16,7 +16,7 @@ import org.melior.service.exception.ExceptionType;
  * wherever {@code ApplicationException} is handled.
  * @author Melior
  * @since 2.0
- * @see {@code ApplicationException}
+ * @see ApplicationException
  */
 public class RemotingException extends ApplicationException{
 

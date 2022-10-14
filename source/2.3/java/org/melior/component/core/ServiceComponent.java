@@ -20,8 +20,8 @@ import org.melior.service.exception.ApplicationException;
  * and a logger.
  * @author Melior
  * @since 2.0
- * @see {@code ServiceContext}
- * @see {@code Configuration}
+ * @see ServiceContext
+ * @see Configuration
  */
 public class ServiceComponent{
     protected Logger logger = LoggerFactory.getLogger(this.getClass());

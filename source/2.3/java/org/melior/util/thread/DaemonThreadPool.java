@@ -60,6 +60,7 @@ public class DaemonThreadPool{
 
   /**
    * Use thread to execute given callable.
+   * @param <T> The type
    * @param callable The callable to execute
    * @return The future for the callable
    */
@@ -72,10 +73,11 @@ public class DaemonThreadPool{
    * Use child thread to execute given callable.
    * The child inherits the following parameters from the
    * transaction context of the caller.
-   * <p><ul>
+   * <ul>
    * <li>The origin identifier
    * <li>The transaction identifier
-   * </ul><p>
+   * </ul>
+   * @param <T> The type
    * @param callable The callable to execute
    * @return The future for the callable
    */
@@ -108,10 +110,11 @@ public class DaemonThreadPool{
    * Use child threads to execute given callables.
    * The children inherits the following parameters from the
    * transaction context of the caller.
-   * <p><ul>
+   * <ul>
    * <li>The origin identifier
    * <li>The transaction identifier
-   * </ul><p>
+   * </ul>
+   * @param <T> The type
    * @param timeout The maximum amount of time to wait
    * @param timeUnit The time unit of the timeout
    * @param postProcessor The callback to call if a callable has produced a result
@@ -119,28 +122,28 @@ public class DaemonThreadPool{
    * @param callables The callables to execute
    */
   @SafeVarargs
-  public final <V> void executeAsChild(
+  public final <T> void executeAsChild(
     final long timeout,
     final TimeUnit timeUnit,
-    final Consumer<V> postProcessor,
+    final Consumer<T> postProcessor,
     final Consumer<Throwable> errorProcessor,
-    final Callable<V>...callables){
+    final Callable<T>...callables){
         long remainingTime;
     Timer timer;
-    List<Future<V>> futures;
-    V result;
+    List<Future<T>> futures;
+    T result;
 
         remainingTime = timeUnit.toMillis(timeout);
 
         timer = Timer.ofMillis().start();
 
-        futures = new ArrayList<Future<V>>(callables.length);
+        futures = new ArrayList<Future<T>>(callables.length);
 
-        for (Callable<V> callable : callables){
+        for (Callable<T> callable : callables){
       futures.add(executeAsChild(callable));
     }
 
-        for (Future<V> future : futures){
+        for (Future<T> future : futures){
 
       try{
                 result = future.get(Clamp.clampLong(remainingTime - timer.elapsedTime(), 0, Long.MAX_VALUE), TimeUnit.MILLISECONDS);
@@ -177,10 +180,10 @@ public class DaemonThreadPool{
    * Use child thread to execute given runnable.
    * The child inherits the following parameters from the
    * transaction context of the caller.
-   * <p><ul>
+   * <ul>
    * <li>The origin identifier
    * <li>The transaction identifier
-   * </ul><p>
+   * </ul>
    * @param runnable The runnable to execute
    * @return The future for the callable
    */
@@ -213,10 +216,10 @@ public class DaemonThreadPool{
    * Use child threads to execute given runnables.
    * The children inherits the following parameters from the
    * transaction context of the caller.
-   * <p><ul>
+   * <ul>
    * <li>The origin identifier
    * <li>The transaction identifier
-   * </ul><p>
+   * </ul>
    * @param timeout The maximum amount of time to wait
    * @param timeUnit The time unit of the timeout
    * @param errorProcessor The callback to call if a runnable has failed with an exception

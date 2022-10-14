@@ -10,6 +10,8 @@ package org.melior.logging.core;
 import java.net.InetAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
+
 import org.melior.context.transaction.TransactionContext;
 import org.melior.logging.appender.Appender;
 import org.melior.logging.appender.AppenderConfig;
@@ -32,7 +34,7 @@ import org.springframework.util.unit.DataSize;
  * events at the internal appenders.
  * @author Melior
  * @since 2.1
- * @see {@code Appender}
+ * @see Appender
  */
 public class LoggerContext{
     private static LoggerContext instance;
@@ -172,7 +174,7 @@ public class LoggerContext{
         previousTime = System.nanoTime();
 
     while (true){
-            ThreadControl.sleep(0, (int) duration);
+            ThreadControl.sleep(duration, TimeUnit.NANOSECONDS);
 
             generateTimestamp();
 

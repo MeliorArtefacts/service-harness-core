@@ -21,6 +21,7 @@ import org.melior.context.transaction.Argument;
 import org.melior.service.exception.ApplicationException;
 import org.melior.service.exception.ExceptionType;
 import org.melior.util.collection.BlockingQueue;
+import org.melior.util.collection.Queue;
 import org.melior.util.exception.StackTrace;
 import org.melior.util.number.Clamp;
 import org.melior.util.thread.DaemonThread;
@@ -34,7 +35,7 @@ import org.springframework.boot.logging.LogLevel;
  * are included when logging to the transaction log.
  * @author Melior
  * @since 2.1
- * @see {@code Appender}
+ * @see Appender
  */
 public class FileAppender extends Appender{
     private static final String FORMAT_FILE_DATE = "yyyy-MM-dd";
@@ -68,7 +69,7 @@ public class FileAppender extends Appender{
 
   /**
    * Constructor.
-   * @param logType The log type
+   * @param stream The stream
    * @param configuration The configuration
    * @throws ApplicationException if an error occurs during the construction
    */
@@ -87,7 +88,7 @@ public class FileAppender extends Appender{
 
         printWriter = null;
 
-        archiveQueue = new BlockingQueue<File>();
+        archiveQueue = Queue.ofBlocking();
 
         DaemonThread.create(() -> archiveFiles());
 
@@ -185,7 +186,6 @@ public class FileAppender extends Appender{
    * @param transactionType The transaction type
    * @param status The transaction status
    * @param duration The transaction duration
-   * @param originId The origin identifier
    * @param argumentList The transaction argument list
    * @param stackTracePrefix The stack trace prefix
    * @param throwable The throwable

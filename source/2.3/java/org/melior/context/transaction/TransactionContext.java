@@ -36,6 +36,8 @@ public class TransactionContext{
 
     private String transactionId;
 
+    private String correlationId;
+
     private String operation;
 
     private String transactionType;
@@ -81,6 +83,7 @@ public class TransactionContext{
         timer = null;
     originId = null;
     transactionId = null;
+    correlationId = null;
     operation = null;
     transactionType = null;
     argumentList.clear();
@@ -188,6 +191,23 @@ public class TransactionContext{
   }
 
   /**
+   * Get correlation identifier.
+   * @return The correlation identifier
+   */
+  public String getCorrelationId(){
+    return correlationId;
+  }
+
+  /**
+   * Set correlation identifier.
+   * @param correlationId The correlation identifier
+   */
+  public void setCorrelationId(
+    final String correlationId){
+    this.correlationId = correlationId;
+  }
+
+  /**
    * Get operation.
    * @return The operation
    */
@@ -231,8 +251,8 @@ public class TransactionContext{
 
   /**
    * Add argument if argument value is not {@code null}.
-   * @param The argument name
-   * @param The argument value
+   * @param name The argument name
+   * @param value The argument value
    */
   public void addNonNullArgument(
     final String name,
@@ -246,8 +266,8 @@ public class TransactionContext{
 
   /**
    * Add argument.
-   * @param The argument name
-   * @param The argument value
+   * @param name The argument name
+   * @param value The argument value
    */
   public void addArgument(
     final String name,

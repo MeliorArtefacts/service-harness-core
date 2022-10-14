@@ -27,7 +27,7 @@ public class BlockingQueue<T>{
   /**
    * Constructor.
    */
-  public BlockingQueue(){
+  BlockingQueue(){
         super();
 
         list = new LinkedList<T>();

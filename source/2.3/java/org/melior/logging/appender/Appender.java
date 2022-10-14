@@ -9,6 +9,7 @@
 package org.melior.logging.appender;
 import java.util.List;
 import org.melior.context.transaction.Argument;
+import org.melior.service.config.Configuration;
 import org.melior.service.exception.ApplicationException;
 import org.springframework.boot.logging.LogLevel;
 
@@ -19,8 +20,8 @@ import org.springframework.boot.logging.LogLevel;
  * to configure itself.
  * @author Melior
  * @since 2.1
- * @see {@code Stream}
- * @see {@code Configuration}
+ * @see Stream
+ * @see Configuration
  */
 public abstract class Appender{
     protected Stream stream;

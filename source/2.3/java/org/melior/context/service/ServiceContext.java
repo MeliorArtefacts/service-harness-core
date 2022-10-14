@@ -25,8 +25,8 @@ import org.springframework.stereotype.Component;
  * of the service and can immediately react to changes in the status.
  * @author Melior
  * @since 2.0
- * @see {@code ServiceState}
- * @see {@code Configuration}
+ * @see ServiceState
+ * @see Configuration
  */
 @Component
 @ComponentScan(basePackages = "org.melior")

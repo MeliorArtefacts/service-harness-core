@@ -35,10 +35,10 @@ public interface DaemonThread{
    * Create child thread to execute given runnable.
    * The child inherits the following parameters from the
    * transaction context of the caller.
-   * <p><ul>
+   * <ul>
    * <li>The origin identifier
    * <li>The transaction identifier
-   * </ul><p>
+   * </ul>
    * @param runnable The runnable to execute
    */
   public static void createAsChild(

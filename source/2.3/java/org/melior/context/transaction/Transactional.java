@@ -22,6 +22,7 @@ public interface Transactional<T>{
 
   /**
    * Construct transactional batch processor.
+   * @param <T> The type
    * @param batchProcessor The original batch processor
    * @return The transactional batch processor
    */
@@ -32,6 +33,7 @@ public interface Transactional<T>{
 
   /**
    * Construct transactional singleton processor.
+   * @param <T> The type
    * @param singletonProcessor The original singleton processor
    * @return The transactional singleton processor
    */
@@ -42,6 +44,7 @@ public interface Transactional<T>{
 
   /**
    * Construct transactional callable.
+   * @param <T> The type
    * @param callable The original callable
    * @return The transactional callable
    */
@@ -52,6 +55,7 @@ public interface Transactional<T>{
 
   /**
    * Construct transactional callable.
+   * @param <T> The type
    * @param callable The original callable
    * @return The transactional callable
    */
@@ -62,6 +66,7 @@ public interface Transactional<T>{
 
   /**
    * Construct transactional runnable.
+   * @param <T> The type
    * @param runnable The original runnable
    * @return The transactional runnable
    */

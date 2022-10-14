@@ -23,6 +23,7 @@ public interface Retry{
 
   /**
    * Attempt to execute action up to specified number of attempts.
+   * @param <T> The type
    * @param attempts The number of attempts
    * @param action The action to execute
    * @return The return from the action
@@ -36,6 +37,7 @@ public interface Retry{
 
   /**
    * Attempt to execute action up to specified number of attempts.
+   * @param <T> The type
    * @param attempts The number of attempts
    * @param action The action to execute
    * @param predicate The exception predicate
@@ -67,9 +69,9 @@ public interface Retry{
 
   /**
    * Attempt to execute action up to specified number of attempts.
+   * @param <T> The type
    * @param attempts The number of attempts
    * @param action The action to execute
-   * @return The return from the action
    * @throws Exception if the action cannot be executed successfully
    */
   public static <T> void execute(
@@ -80,10 +82,10 @@ public interface Retry{
 
   /**
    * Attempt to execute action up to specified number of attempts.
+   * @param <T> The type
    * @param attempts The number of attempts
    * @param action The action to execute
    * @param predicate The exception predicate
-   * @return The return from the action
    * @throws Exception if the action cannot be executed successfully
    */
   public static <T> void execute(

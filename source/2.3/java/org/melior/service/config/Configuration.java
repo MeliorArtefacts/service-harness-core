@@ -58,6 +58,7 @@ public class Configuration{
 
   /**
    * Get property value.
+   * @param <T> The type
    * @param name The name of the property
    * @param clazz The class of the property
    * @return The value of the property
@@ -97,6 +98,7 @@ public class Configuration{
 
   /**
    * Get property value.
+   * @param <T> The type
    * @param name The name of the property
    * @param clazz The class of the property
    * @param defaultValue A default value for the property

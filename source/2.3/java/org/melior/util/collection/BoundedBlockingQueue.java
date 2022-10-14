@@ -31,7 +31,7 @@ public class BoundedBlockingQueue<T>{
    * Constructor.
    * @param capacity The capacity of the queue
    */
-  public BoundedBlockingQueue(
+  BoundedBlockingQueue(
     final int capacity){
         super();
 

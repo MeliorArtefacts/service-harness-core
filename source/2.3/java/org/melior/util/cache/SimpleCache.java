@@ -98,6 +98,7 @@ public class SimpleCache<K, V>{
    * @param key The key to use to find the value
    * @param producer The producer that will provide the value
    * @return The value
+   * @throws ApplicationException when the producer cannot produce a value
    */
   public synchronized V get(
     final K key,

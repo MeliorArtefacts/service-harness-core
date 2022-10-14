@@ -12,6 +12,7 @@ package org.melior.util.semaphore;
  * Provides write-only access to a semaphore.
  * @author Melior
  * @since 2.0
+ * @see Semaphore
  */
 public interface WriteOnlySemaphore{
 

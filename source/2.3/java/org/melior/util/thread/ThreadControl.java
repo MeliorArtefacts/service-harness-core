@@ -7,6 +7,8 @@
     Service Harness
 */
 package org.melior.util.thread;
+import java.util.concurrent.TimeUnit;
+
 import org.melior.logging.core.Logger;
 import org.melior.logging.core.LoggerFactory;
 
@@ -26,19 +28,21 @@ public class ThreadControl{
   }
 
   /**
-   * Wait for given number of milliseconds.
+   * Wait for given amount of time.
    * @param lock The lock object to wait on
-   * @param millis The number of milliseconds
+   * @param time The amount of time to wait
+   * @param timeUnit The time unit
    */
   public static void wait(
     final Object lock,
-    final long millis){
+    final long time,
+    final TimeUnit timeUnit){
         String methodName = "wait";
 
         synchronized (lock){
 
       try{
-                lock.wait(millis);
+                lock.wait(TimeUnit.MILLISECONDS.convert(time, timeUnit));
       }
       catch (Exception exception){
         logger.error(methodName, "Thread has been interrupted.", exception);
@@ -49,34 +53,24 @@ public class ThreadControl{
   }
 
   /**
-   * Sleep for given number of milliseconds.
-   * @param millis The number of milliseconds
+   * Sleep for given amount of time.
+   * @param time The amount of time to wait
+   * @param timeUnit The time unit
    */
   public static void sleep(
-    final long millis){
+    final long time,
+    final TimeUnit timeUnit){
         String methodName = "sleep";
 
-        try{
-            Thread.sleep(millis);
-    }
-    catch (Exception exception){
-      logger.error(methodName, "Thread has been interrupted.", exception);
-    }
+    try{
 
-  }
+            if (timeUnit == TimeUnit.NANOSECONDS){
+                Thread.sleep(0, (int) time);
+      }
+      else{
+                Thread.sleep(TimeUnit.MILLISECONDS.convert(time, timeUnit));
+      }
 
-  /**
-   * Sleep for given number of milliseconds and nanoseconds.
-   * @param millis The number of milliseconds
-   * @param nanos The number of nanoseconds
-   */
-  public static void sleep(
-    final long millis,
-    final int nanos){
-        String methodName = "sleep";
-
-        try{
-            Thread.sleep(millis, nanos);
     }
     catch (Exception exception){
       logger.error(methodName, "Thread has been interrupted.", exception);

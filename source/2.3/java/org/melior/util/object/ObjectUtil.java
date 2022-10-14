@@ -24,9 +24,10 @@ public interface ObjectUtil{
   /**
    * Return first object if it is non-{@code null},
    * otherwise return second object.
+   * @param <T> The type
    * @param obj1 The first object
    * @param obj2 The second object
-   * @return
+   * @return The non-{@code null} object, if any
    */
   public static <T> T coalesce(
     final T obj1,
@@ -35,9 +36,27 @@ public interface ObjectUtil{
   }
 
   /**
+   * Return first object if it is non-{@code null},
+   * otherwise return second object if it is non-{@code null},
+   * otherwise return third object.
+   * @param <T> The type
+   * @param obj1 The first object
+   * @param obj2 The second object
+   * @param obj3 The third object
+   * @return The non-{@code null} object, if any
+   */
+  public static <T> T coalesce(
+    final T obj1,
+    final T obj2,
+    final T obj3){
+    return (obj1 == null) ? ((obj2 == null) ? obj3 : obj2) : obj1;
+  }
+
+  /**
    * Return first non-{@code null} object in list.
+   * @param <T> The type
    * @param objects The list of objects
-   * @return The first non-{@code null} object
+   * @return The first non-{@code null} object, if any
    */
   @SafeVarargs
   public static <T> T coalesce(
@@ -56,7 +75,8 @@ public interface ObjectUtil{
 
   /**
    * Determine whether object is contained within array.
-   * @param array The array of objects
+   * @param <T> The type
+   * @param objects The array of objects
    * @param obj The object
    * @return true if the object is contained within the array, false otherwise
    */
@@ -77,6 +97,7 @@ public interface ObjectUtil{
 
   /**
    * Collect objects into array.
+   * @param <T> The type
    * @param objects The objects
    * @return The array
    */
@@ -131,6 +152,8 @@ public interface ObjectUtil{
 
   /**
    * Convert from one type of array to another.
+   * @param <T> The input element type
+   * @param <U> The output element type
    * @param array The input array
    * @param clazz The output element type
    * @param converter The element converter
@@ -158,6 +181,8 @@ public interface ObjectUtil{
 
   /**
    * Convert from one type of list to another.
+   * @param <T> The input element type
+   * @param <U> The output element type
    * @param list The input list
    * @param clazz The output element type
    * @param converter The element converter
@@ -185,8 +210,10 @@ public interface ObjectUtil{
   /**
    * Require object to not be {@code null}.  If the object is
    * {@code null} then an exception is raised with the message.
+   * @param <T> The type
    * @param obj The object
    * @param message The message
+   * @throws ApplicationException if the object is {@code null}
    */
   public static <T> void requireNonNull(
     final T obj,
@@ -201,6 +228,7 @@ public interface ObjectUtil{
   /**
    * Ensures that the returned list is never {@code null}.  If the input list
    * is {@code null} then a new list is created.
+   * @param <T> The type
    * @param list The input list
    * @return The input list, or a new list if the input list is null
    */
@@ -213,6 +241,7 @@ public interface ObjectUtil{
    * Translate object.  If no option matches the object then the following applies:
    * if the last option is unary then it is returned as a default translation,
    * otherwise {@code null} is returned.
+   * @param <T> The type
    * @param obj The object
    * @param options The available options
    * @return The translation

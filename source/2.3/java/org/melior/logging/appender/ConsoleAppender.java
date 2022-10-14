@@ -22,7 +22,7 @@ import org.springframework.boot.logging.LogLevel;
  * are included when logging to the transaction log.
  * @author Melior
  * @since 2.1
- * @see {@code Appender}
+ * @see Appender
  */
 public class ConsoleAppender extends Appender{
     private PrintStream printStream;
@@ -132,7 +132,6 @@ public class ConsoleAppender extends Appender{
    * @param transactionType The transaction type
    * @param status The transaction status
    * @param duration The transaction duration
-   * @param originId The origin identifier
    * @param argumentList The transaction argument list
    * @param stackTracePrefix The stack trace prefix
    * @param throwable The throwable

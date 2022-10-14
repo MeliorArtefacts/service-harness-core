@@ -73,7 +73,7 @@ public interface ClientSSLContext{
         KeyStore keyStore = null;
     KeyManagerFactory keyManagerFactory = null;
     KeyStore trustStore = null;
-    TrustManagerFactory trustManagerFactory;
+    TrustManagerFactory trustManagerFactory = null;
     SSLContext sslContext;
 
     try{
@@ -86,7 +86,8 @@ public interface ClientSSLContext{
         }
 
                 keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        keyManagerFactory.init(keyStore, StringUtil.toCharArray(clientConfig.getKeyPassword()));
+        keyManagerFactory.init(keyStore, StringUtil.toCharArray(ObjectUtil.coalesce(
+          clientConfig.getKeyPassword(), clientConfig.getKeyStorePassword(), "")));
       }
 
             if (clientConfig.getTrustStore() != null){
@@ -96,14 +97,13 @@ public interface ClientSSLContext{
           trustStore.load(inputStream, StringUtil.toCharArray(clientConfig.getTrustStorePassword()));
         }
 
+                trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init(trustStore);
       }
-
-            trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-      trustManagerFactory.init(trustStore);
 
             sslContext = SSLContext.getInstance(protocol);
       sslContext.init((keyManagerFactory == null) ? null : keyManagerFactory.getKeyManagers(),
-        trustManagerFactory.getTrustManagers(), new SecureRandom());
+        (trustManagerFactory == null) ? null : trustManagerFactory.getTrustManagers(), new SecureRandom());
     }
     catch (Exception exception){
       throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);

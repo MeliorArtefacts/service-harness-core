@@ -18,6 +18,8 @@ public interface Cache{
 
   /**
    * Get instance of simple cache with bounded capacity.
+   * @param <K> The type of key
+   * @param <V> The type of value
    * @param capacity The capacity of the cache
    * @return The cache
    */
@@ -28,6 +30,8 @@ public interface Cache{
 
   /**
    * Get instance of LRU cache with bounded capacity.
+   * @param <K> The type of key
+   * @param <V> The type of value
    * @param capacity The capacity of the cache
    * @return The cache
    */
@@ -38,6 +42,8 @@ public interface Cache{
 
   /**
    * Get instance of timed cache with bounded capacity.
+   * @param <K> The type of key
+   * @param <V> The type of value
    * @param capacity The capacity of the cache
    * @param lifetime The lifetime of the cache entries
    * @param timeUnit The time unit of the lifetime
@@ -52,6 +58,8 @@ public interface Cache{
 
   /**
    * Get instance of auto-refresh cache.
+   * @param <K> The type of key
+   * @param <V> The type of value
    * @param cacheLoader The cache loader
    * @param lifetime The lifetime of the cache entries
    * @param timeUnit The time unit of the lifetime

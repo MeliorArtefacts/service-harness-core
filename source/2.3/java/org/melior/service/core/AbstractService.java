@@ -23,8 +23,8 @@ import org.springframework.context.annotation.ComponentScan;
  * and a logger.
  * @author Melior
  * @since 2.0
- * @see {@code ServiceContext}
- * @see {@code Configuration}
+ * @see ServiceContext
+ * @see Configuration
  */
 @SpringBootApplication
 @ComponentScan(basePackages = "org.melior")

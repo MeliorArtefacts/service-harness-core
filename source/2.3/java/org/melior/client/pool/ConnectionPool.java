@@ -16,6 +16,7 @@ import org.melior.logging.core.Logger;
 import org.melior.logging.core.LoggerFactory;
 import org.melior.service.core.ServiceState;
 import org.melior.util.collection.BlockingQueue;
+import org.melior.util.collection.Queue;
 import org.melior.util.number.Clamp;
 import org.melior.util.number.Counter;
 import org.melior.util.object.ObjectUtil;
@@ -89,7 +90,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
 
         totalConnections = Counter.of(0);
 
-        availableConnectionQueue = new BlockingQueue<T>();
+        availableConnectionQueue = Queue.ofBlocking();
 
         connectionsSupply = Counter.of(0);
 
@@ -97,7 +98,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
 
         activeConnectionsCeiling = 0;
 
-        retireConnectionQueue = new BlockingQueue<T>();
+        retireConnectionQueue = Queue.ofBlocking();
 
         lastException = null;
 
@@ -161,7 +162,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
   /**
    * Get connection from pool.
    * @return The connection
-   * @throws JmsException if unable to get a connection
+   * @throws RemotingException if unable to get a connection
    */
   public P getConnection() throws RemotingException{
         String methodName = "getConnection";
@@ -248,7 +249,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
   /**
    * Release connection into connection pool.
    * @param connection The connection to release
-   * @throws SQLException if unable to release the connection
+   * @throws RemotingException if unable to release the connection
    */
   public void releaseConnection(
     final T connection) throws RemotingException{
@@ -300,7 +301,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
                         if (remainingBackoff > 0){
               logger.debug(methodName, "Backing off for ", (remainingBackoff / 1000), " seconds.");
 
-                            ThreadControl.sleep(remainingBackoff);
+                            ThreadControl.sleep(remainingBackoff, TimeUnit.MILLISECONDS);
 
               continue;
             }
@@ -373,7 +374,7 @@ public class ConnectionPool<C extends ClientConfig, T extends Connection<C, T, P
                     activeConnectionsCeiling = 0;
         }
 
-                ThreadControl.wait(this, configuration.getPruneInterval());
+                ThreadControl.wait(this, configuration.getPruneInterval(), TimeUnit.MILLISECONDS);
       }
       catch (Exception exception){
         logger.error(methodName, "Failed to prune expired connections: ", exception.getMessage(), exception);
