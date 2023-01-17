@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.util.time;
 import java.time.LocalDateTime;
@@ -15,36 +15,40 @@ import java.time.LocalDateTime;
  * @author Melior
  * @since 2.1
  */
-public class AccurateLocalDateTime{
+public class AccurateLocalDateTime {
+
     private static LocalDateTime anchorDateTime;
 
     private static long anchorNanos;
 
-  static{
+    static {
+
         LocalDateTime currentDateTime;
 
         currentDateTime = LocalDateTime.now();
 
-        while ((anchorDateTime = LocalDateTime.now()).equals(currentDateTime) == true){
-      anchorNanos = System.nanoTime();
+        while ((anchorDateTime = LocalDateTime.now()).equals(currentDateTime) == true) {
+            anchorNanos = System.nanoTime();
+        }
+
+        anchorNanos = System.nanoTime();
     }
 
-    anchorNanos = System.nanoTime();
-  }
+    /**
+     * Constructor. 
+     */
+    private AccurateLocalDateTime() {
 
-  /**
-   * Constructor. 
-   */
-  private AccurateLocalDateTime(){
         super();
-  }
+    }
 
-  /**
-   * Get current local date time.
-   * @return The local date time
-   */
-  public static LocalDateTime now(){
+    /**
+     * Get current local date time.
+     * @return The local date time
+     */
+    public static LocalDateTime now() {
+
         return anchorDateTime.plusNanos(System.nanoTime() - anchorNanos);
-  }
+    }
 
 }

@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.client.ssl;
 import java.io.InputStream;
@@ -31,85 +31,90 @@ import org.melior.util.string.StringUtil;
  * @author Melior
  * @since 2.3
  */
-public interface ClientSSLContext{
+public interface ClientSSLContext {
 
-  /**
-   * Create lenient SSL context.
-   * @param protocol The protocol to support
-   * @return The SSL context
-   */
-  public static SSLContext ofLenient(
-    final String protocol){
+    /**
+     * Create lenient SSL context.
+     * @param protocol The protocol to support
+     * @return The SSL context
+     */
+    public static SSLContext ofLenient(
+        final String protocol) {
+
         SSLContext sslContext;
 
-    try{
+        try {
+
             sslContext = SSLContext.getInstance(protocol);
-      sslContext.init(null, new TrustManager[] {new X509ExtendedTrustManager(){
-        public X509Certificate[] getAcceptedIssuers() {return null;}
-        public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
-        public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}
-        public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}
-        public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
-        public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}
-        public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}
-      }}, new SecureRandom());
-    }
-    catch (Exception exception){
-      throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
+            sslContext.init(null, new TrustManager[] {new X509ExtendedTrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {return null;}
+                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}
+                public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket) throws CertificateException {}
+                public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine) throws CertificateException {}
+            }}, new SecureRandom());
+        }
+        catch (Exception exception) {
+            throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
+        }
+
+        return sslContext;
     }
 
-    return sslContext;
-  }
+    /**
+     * Create SSL context that uses configured key store and trust store.
+     * @param protocol The protocol to support
+     * @param clientConfig The configuration
+     * @return The SSL context
+     */
+    public static SSLContext ofKeyStore(
+        final String protocol,
+        final ClientConfig clientConfig) {
 
-  /**
-   * Create SSL context that uses configured key store and trust store.
-   * @param protocol The protocol to support
-   * @param clientConfig The configuration
-   * @return The SSL context
-   */
-  public static SSLContext ofKeyStore(
-    final String protocol,
-    final ClientConfig clientConfig){
         KeyStore keyStore = null;
-    KeyManagerFactory keyManagerFactory = null;
-    KeyStore trustStore = null;
-    TrustManagerFactory trustManagerFactory = null;
-    SSLContext sslContext;
+        KeyManagerFactory keyManagerFactory = null;
+        KeyStore trustStore = null;
+        TrustManagerFactory trustManagerFactory = null;
+        SSLContext sslContext;
 
-    try{
+        try {
 
-            if (clientConfig.getKeyStore() != null){
+            if (clientConfig.getKeyStore() != null) {
+
                 keyStore = KeyStore.getInstance(ObjectUtil.coalesce(clientConfig.getKeyStoreType(), KeyStore.getDefaultType()));
 
-                try (InputStream inputStream = clientConfig.getKeyStore().getInputStream()){
-          keyStore.load(inputStream, StringUtil.toCharArray(clientConfig.getKeyStorePassword()));
-        }
+                try (InputStream inputStream = clientConfig.getKeyStore().getInputStream()) {
+                    keyStore.load(inputStream, StringUtil.toCharArray(clientConfig.getKeyStorePassword()));
+                }
 
                 keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-        keyManagerFactory.init(keyStore, StringUtil.toCharArray(ObjectUtil.coalesce(
-          clientConfig.getKeyPassword(), clientConfig.getKeyStorePassword(), "")));
-      }
+                keyManagerFactory.init(keyStore, StringUtil.toCharArray(ObjectUtil.coalesce(
+                    clientConfig.getKeyPassword(), clientConfig.getKeyStorePassword(), "")));
+            }
 
-            if (clientConfig.getTrustStore() != null){
+            if (clientConfig.getTrustStore() != null) {
+
                 trustStore = KeyStore.getInstance(ObjectUtil.coalesce(clientConfig.getTrustStoreType(), KeyStore.getDefaultType()));
 
-                try (InputStream inputStream = clientConfig.getTrustStore().getInputStream()){
-          trustStore.load(inputStream, StringUtil.toCharArray(clientConfig.getTrustStorePassword()));
-        }
+                try (InputStream inputStream = clientConfig.getTrustStore().getInputStream()) {
+                    trustStore.load(inputStream, StringUtil.toCharArray(clientConfig.getTrustStorePassword()));
+                }
 
                 trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-        trustManagerFactory.init(trustStore);
-      }
+                trustManagerFactory.init(trustStore);
+            }
 
             sslContext = SSLContext.getInstance(protocol);
-      sslContext.init((keyManagerFactory == null) ? null : keyManagerFactory.getKeyManagers(),
-        (trustManagerFactory == null) ? null : trustManagerFactory.getTrustManagers(), new SecureRandom());
-    }
-    catch (Exception exception){
-      throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
-    }
+            sslContext.init((keyManagerFactory == null) ? null : keyManagerFactory.getKeyManagers(),
+                (trustManagerFactory == null) ? null : trustManagerFactory.getTrustManagers(), new SecureRandom());
+        }
+        catch (Exception exception) {
+            throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
+        }
 
-    return sslContext;
-  }
+        return sslContext;
+    }
 
 }

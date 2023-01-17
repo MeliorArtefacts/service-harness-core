@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.client.exception;
 import org.melior.service.exception.ApplicationException;
@@ -18,111 +18,120 @@ import org.melior.service.exception.ExceptionType;
  * @since 2.0
  * @see ApplicationException
  */
-public class RemotingException extends ApplicationException{
+public class RemotingException extends ApplicationException {
 
-  /**
-   * Constructor.
-   * @param type The exception type
-   * @param message The exception message
-   */
-  public RemotingException(
-    final ExceptionType type,
-    final String message){
+    /**
+     * Constructor.
+     * @param type The exception type
+     * @param message The exception message
+     */
+    public RemotingException(
+        final ExceptionType type,
+        final String message) {
+
         super(type, message);
-  }
+    }
 
-  /**
-   * Constructor.
-   * @param type The exception type
-   * @param code The exception code
-   * @param message The exception message
-   */
-  public RemotingException(
-    final ExceptionType type,
-    final String code,
-    final String message){
+    /**
+     * Constructor.
+     * @param type The exception type
+     * @param code The exception code
+     * @param message The exception message
+     */
+    public RemotingException(
+        final ExceptionType type,
+        final String code,
+        final String message) {
+
         super(type, code, message);
-  }
+    }
 
-  /**
-   * Constructor.
-   * @param type The exception type
-   * @param message The exception message
-   * @param cause The exception cause
-   */
-  public RemotingException(
-    final ExceptionType type,
-    final String message,
-    final Throwable cause){
+    /**
+     * Constructor.
+     * @param type The exception type
+     * @param message The exception message
+     * @param cause The exception cause
+     */
+    public RemotingException(
+        final ExceptionType type,
+        final String message,
+        final Throwable cause) {
+
         super(type, message, cause);
-  }
+    }
 
-  /**
-   * Constructor.
-   * @param type The exception type
-   * @param code The exception code
-   * @param message The exception message
-   * @param cause The exception cause
-   */
-  public RemotingException(
-    final ExceptionType type,
-    final String code,
-    final String message,
-    final Throwable cause){
+    /**
+     * Constructor.
+     * @param type The exception type
+     * @param code The exception code
+     * @param message The exception message
+     * @param cause The exception cause
+     */
+    public RemotingException(
+        final ExceptionType type,
+        final String code,
+        final String message,
+        final Throwable cause) {
+
         super(type, code, message, cause);
-  }
+    }
 
-  /**
-   * Constructor.  The exception type is REMOTING_APPLICATION.
-   * @param message The exception message
-   */
-  public RemotingException(
-    final String message){
+    /**
+     * Constructor.  The exception type is REMOTING_APPLICATION.
+     * @param message The exception message
+     */
+    public RemotingException(
+        final String message) {
+
         super(ExceptionType.REMOTING_APPLICATION, message);
-  }
+    }
 
-  /**
-   * Constructor.  The exception type is REMOTING_APPLICATION.
-   * @param code The exception code
-   * @param message The exception message
-   */
-  public RemotingException(
-    final String code,
-    final String message){
+    /**
+     * Constructor.  The exception type is REMOTING_APPLICATION.
+     * @param code The exception code
+     * @param message The exception message
+     */
+    public RemotingException(
+        final String code,
+        final String message) {
+
         super(ExceptionType.REMOTING_APPLICATION, code, message);
-  }
+    }
 
-  /**
-   * Constructor.  The exception type is REMOTING_APPLICATION.
-   * @param message The exception message
-   * @param cause The exception cause
-   */
-  public RemotingException(
-    final String message,
-    final Throwable cause){
+    /**
+     * Constructor.  The exception type is REMOTING_APPLICATION.
+     * @param message The exception message
+     * @param cause The exception cause
+     */
+    public RemotingException(
+        final String message,
+        final Throwable cause) {
+
         super(ExceptionType.REMOTING_APPLICATION, message, cause);
-  }
+    }
 
-  /**
-   * Constructor.  The exception type is REMOTING_APPLICATION.
-   * @param code The exception code
-   * @param message The exception message
-   * @param cause The exception cause
-   */
-  public RemotingException(
-    final String code,
-    final String message,
-    final Throwable cause){
+    /**
+     * Constructor.  The exception type is REMOTING_APPLICATION.
+     * @param code The exception code
+     * @param message The exception message
+     * @param cause The exception cause
+     */
+    public RemotingException(
+        final String code,
+        final String message,
+        final Throwable cause) {
+
         super(ExceptionType.REMOTING_APPLICATION, code, message, cause);
-  }
+    }
 
-  /**
-   * Constructor.  The exception type is REMOTING_APPLICATION.
-   * @param cause The exception cause
-   */
-  public RemotingException(
-    final Throwable cause){
+    /**
+     * Constructor.  The exception type is REMOTING_APPLICATION.
+     * @param cause The exception cause
+     */
+    public RemotingException(
+        final Throwable cause) {
+
         super(ExceptionType.REMOTING_APPLICATION, cause.getMessage(), cause);
-  }
+    }
 
 }

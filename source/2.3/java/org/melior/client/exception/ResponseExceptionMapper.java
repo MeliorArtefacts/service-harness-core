@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.client.exception;
 import org.melior.service.exception.ExceptionType;
@@ -16,24 +16,24 @@ import org.melior.service.exception.ExceptionType;
  * @author Melior
  * @since 2.0
  */
-public interface ResponseExceptionMapper{
+public interface ResponseExceptionMapper {
 
-  /**
-   * Get exception type.
-   * @return The exception type
-   */
-  public ExceptionType getExceptionType();
+    /**
+     * Get exception type.
+     * @return The exception type
+     */
+    public ExceptionType getExceptionType();
 
-  /**
-   * Get exception code.
-   * @return The exception code
-   */
-  public String getExceptionCode();
+    /**
+     * Get exception code.
+     * @return The exception code
+     */
+    public String getExceptionCode();
 
-  /**
-   * Get exception message.
-   * @return The exception message
-   */
-  public String getExceptionMessage();
+    /**
+     * Get exception message.
+     * @return The exception message
+     */
+    public String getExceptionMessage();
 
 }

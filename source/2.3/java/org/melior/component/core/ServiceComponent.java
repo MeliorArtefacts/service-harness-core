@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.component.core;
 import org.melior.context.service.ServiceContext;
@@ -23,20 +23,22 @@ import org.melior.service.exception.ApplicationException;
  * @see ServiceContext
  * @see Configuration
  */
-public class ServiceComponent{
+public class ServiceComponent {
+
     protected Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected ServiceContext serviceContext;
 
     protected Configuration configuration;
 
-  /**
-   * Constructor.
-   * @param serviceContext The service context
-   * @throws ApplicationException if an error occurs during the construction
-   */
-  public ServiceComponent(
-    final ServiceContext serviceContext) throws ApplicationException{
+    /**
+     * Constructor.
+     * @param serviceContext The service context
+     * @throws ApplicationException if an error occurs during the construction
+     */
+    public ServiceComponent(
+        final ServiceContext serviceContext) throws ApplicationException {
+
         super();
 
         this.serviceContext = serviceContext;
@@ -44,29 +46,29 @@ public class ServiceComponent{
         this.configuration = ServiceContext.getConfiguration();
 
         configure();
-  }
+    }
 
-  /**
-   * Indicate whether service component is active.
-   * @return true if the service component is active, false otherwise
-   */
-  public boolean isActive(){
-    return ServiceState.isActive();
-  }
+    /**
+     * Indicate whether service component is active.
+     * @return true if the service component is active, false otherwise
+     */
+    public boolean isActive() {
+        return ServiceState.isActive();
+    }
 
-  /**
-   * Indicate whether service component is suspended.
-   * @return true if the service component is suspended, false otherwise
-   */
-  public boolean isSuspended(){
-    return ServiceState.isSuspended();
-  }
+    /**
+     * Indicate whether service component is suspended.
+     * @return true if the service component is suspended, false otherwise
+     */
+    public boolean isSuspended() {
+        return ServiceState.isSuspended();
+    }
 
-  /**
-   * Configure service component.
-   * @throws ApplicationException if unable to configure the service component
-   */
-  protected void configure() throws ApplicationException{
-  }
+    /**
+     * Configure service component.
+     * @throws ApplicationException if unable to configure the service component
+     */
+    protected void configure() throws ApplicationException {
+    }
 
 }

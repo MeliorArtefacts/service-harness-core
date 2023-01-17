@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.client.exception;
 
@@ -14,13 +14,13 @@ package org.melior.client.exception;
  * then the exception is propagated to the client objects parent.
  * @since 2.3
  */
-public interface ExceptionTarget {
+public interface ExceptionTarget  {
 
-  /**
-   * Capture exception.
-   * @param exception The exception
-   */
-  void captureException(
-    final Throwable exception);
+    /**
+     * Capture exception.
+     * @param exception The exception
+     */
+    void captureException(
+        final Throwable exception);
 
 }

@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.util.cache;
 import java.util.LinkedHashMap;
@@ -16,65 +16,71 @@ import java.util.Map;
  * @author Melior
  * @since 2.0
  */
-public class LRUCache<K, V> extends SimpleCache<K, V>{
-
-  /**
-   * Implements a linked hash map with access order and bounded capacity.
-   */
-  @SuppressWarnings("hiding")
-  class LRUMap<K, V> extends LinkedHashMap<K, V>{
-        private LRUCache<K, V> lruCache;
+public class LRUCache<K, V> extends SimpleCache<K, V> {
 
     /**
-     * Constructor.
-     * @param lruCache The LRU cache
+     * Implements a linked hash map with access order and bounded capacity.
      */
-    public LRUMap(
-      final LRUCache<K, V> lruCache){
+    @SuppressWarnings("hiding")
+    class LRUMap<K, V> extends LinkedHashMap<K, V> {
+
+        private LRUCache<K, V> lruCache;
+
+        /**
+         * Constructor.
+         * @param lruCache The LRU cache
+         */
+        public LRUMap(
+            final LRUCache<K, V> lruCache) {
+
             super(lruCache.getCapacity(), 0.75f, true);
 
             this.lruCache = lruCache;
+        }
+
+        /**
+         * Remove eldest entry when at capacity.
+         * @param lruEntry The eldest entry
+         * @return true if the entry was removed, false otherwise
+         */
+        protected boolean removeEldestEntry(
+            final Map.Entry<K, V> lruEntry) {
+
+            boolean remove;
+
+            if ((remove = (size() > lruCache.getCapacity())) == true) {
+
+                lruCache.destroyValue(lruEntry.getValue());
+            }
+
+            return remove;
+        }
+
     }
 
     /**
-     * Remove eldest entry when at capacity.
-     * @param lruEntry The eldest entry
-     * @return true if the entry was removed, false otherwise
+     * Constructor.
+     * @param capacity The capacity of the LRU cache
      */
-    protected boolean removeEldestEntry(
-      final Map.Entry<K, V> lruEntry){
-            boolean remove;
+    LRUCache(
+        final int capacity) {
 
-            if ((remove = (size() > lruCache.getCapacity())) == true){
-                lruCache.destroyValue(lruEntry.getValue());
-      }
-
-      return remove;
-    }
-
-  }
-
-  /**
-   * Constructor.
-   * @param capacity The capacity of the LRU cache
-   */
-  LRUCache(
-    final int capacity){
         super(capacity);
 
         cacheMap = new LRUMap<K, V>(this);
-  }
+    }
 
-  /**
-   * Add entry to cache.
-   * @param key The key of the entry
-   * @param value The value of the entry
-   * @return true if an entry was added to the cache, false otherwise
-   */
-  public synchronized boolean add(
-    final K key,
-    final V value){
+    /**
+     * Add entry to cache.
+     * @param key The key of the entry
+     * @param value The value of the entry
+     * @return true if an entry was added to the cache, false otherwise
+     */
+    public synchronized boolean add(
+        final K key,
+        final V value) {
+
         return ((cacheMap.put(key, value) == null) && (value != null));
-  }
+    }
 
 }

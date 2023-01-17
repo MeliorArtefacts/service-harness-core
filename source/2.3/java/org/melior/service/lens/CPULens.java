@@ -1,15 +1,14 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.service.lens;
 import java.lang.management.ManagementFactory;
 import java.util.concurrent.TimeUnit;
-
 import javax.management.Attribute;
 import javax.management.AttributeList;
 import javax.management.MBeanServer;
@@ -32,7 +31,8 @@ import org.springframework.stereotype.Component;
  * @since 2.2
  */
 @Component
-public class CPULens{
+public class CPULens {
+
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private Semaphore semaphore;
@@ -41,69 +41,75 @@ public class CPULens{
 
     private ObjectName operatingSystemTypeName;
 
-  /**
-   * Constructor.
-   * @throws ApplicationException if an error occurs during the construction
-   */
-  public CPULens() throws ApplicationException{
+    /**
+     * Constructor.
+     * @throws ApplicationException if an error occurs during the construction
+     */
+    public CPULens() throws ApplicationException {
+
         super();
 
         semaphore = Semaphore.of();
 
         beanServer = ManagementFactory.getPlatformMBeanServer();
 
-    try{
+        try {
+
             operatingSystemTypeName = ObjectName.getInstance("java.lang:type=OperatingSystem");
-    }
-    catch (Exception exception){
-      throw new ApplicationException(ExceptionType.LOCAL_APPLICATION, "Failed to create operating system type name.", exception);
-    }
+        }
+        catch (Exception exception) {
+            throw new ApplicationException(ExceptionType.LOCAL_APPLICATION, "Failed to create operating system type name.", exception);
+        }
 
         DaemonThread.create(() -> glimpse());
-  }
+    }
 
-  /**
-   * Request refocus of CPU lens.
-   */
-  public void refocus(){
+    /**
+     * Request refocus of CPU lens.
+     */
+    public void refocus() {
+
         semaphore.release();
-  }
+    }
 
-  /**
-   * Glimpse CPU load.
-   */
-  private void glimpse(){
+    /**
+     * Glimpse CPU load.
+     */
+    private void glimpse() {
+
         String methodName = "glimpse";
-    AttributeList attributeList;
-    double processCPULoad;
-    double nodeCPULoad;
+        AttributeList attributeList;
+        double processCPULoad;
+        double nodeCPULoad;
 
-        while (ServiceState.isActive() == true){
+        while (ServiceState.isActive() == true) {
 
-      try{
+            try {
+
                 semaphore.acquireAndDrain();
 
                 attributeList = beanServer.getAttributes(operatingSystemTypeName, new String[] {"ProcessCpuLoad", "SystemCpuLoad"});
 
-                if (attributeList.isEmpty() == false){
+                if (attributeList.isEmpty() == false) {
+
                     processCPULoad = ((Double) ((Attribute) attributeList.get(0)).getValue()).doubleValue();
-          nodeCPULoad = ((Double) ((Attribute) attributeList.get(1)).getValue()).doubleValue();
+                    nodeCPULoad = ((Double) ((Attribute) attributeList.get(1)).getValue()).doubleValue();
 
-                    if ((processCPULoad != -1.0) && (nodeCPULoad != -1.0)){
-            logger.debug(methodName, "cpu: process=", String.format("%.3f", processCPULoad * 100), " %",
-              ", node=", String.format("%.3f", nodeCPULoad * 100), " %");
-          }
+                    if ((processCPULoad != -1.0) && (nodeCPULoad != -1.0)) {
+                        logger.debug(methodName, "cpu: process=", String.format("%.3f", processCPULoad * 100), " %",
+                            ", node=", String.format("%.3f", nodeCPULoad * 100), " %");
+                    }
 
-        }
+                }
 
                 ThreadControl.wait(this, 100, TimeUnit.MILLISECONDS);
-      }
-      catch (Exception exception){
-        logger.error(methodName, "Failed to glimpse CPU load: ", exception.getMessage(), exception);
-      }
+            }
+            catch (Exception exception) {
+                logger.error(methodName, "Failed to glimpse CPU load: ", exception.getMessage(), exception);
+            }
 
+        }
+            
     }
-      
-  }
 
 }

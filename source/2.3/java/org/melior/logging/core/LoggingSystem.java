@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.logging.core;
 import java.util.Collections;
@@ -20,63 +20,66 @@ import org.springframework.boot.logging.LoggingInitializationContext;
  * @author Melior
  * @since 2.1
  */
-public class LoggingSystem extends org.springframework.boot.logging.LoggingSystem{
+public class LoggingSystem extends org.springframework.boot.logging.LoggingSystem {
 
-  /**
-   * Constructor.
-   * @param classLoader The class loader
-   */
-  public LoggingSystem(
-    final ClassLoader classLoader){
+    /**
+     * Constructor.
+     * @param classLoader The class loader
+     */
+    public LoggingSystem(
+        final ClassLoader classLoader) {
+
         super();
-  }
+    }
 
-  /**
-   * Prepare logging system for initialization.
-   */
-  public void beforeInitialize(){
-  }
+    /**
+     * Prepare logging system for initialization.
+     */
+    public void beforeInitialize() {
+    }
 
-  /**
-   * Initialize logging system.
-   * @param initializationContext The logging initialization context
-   * @param configLocation The logging configuration location
-   * @param logFile The log file name/path
-   */
-  public void initialize(
-    final LoggingInitializationContext initializationContext,
-    final String configLocation,
-    final LogFile logFile){
+    /**
+     * Initialize logging system.
+     * @param initializationContext The logging initialization context
+     * @param configLocation The logging configuration location
+     * @param logFile The log file name/path
+     */
+    public void initialize(
+        final LoggingInitializationContext initializationContext,
+        final String configLocation,
+        final LogFile logFile) {
+
         LoggerContext.get().initialize(initializationContext.getEnvironment());
-  }
+    }
 
-  /**
-   * Set logging level for logger.
-   * @param loggerName The logger name
-   * @param loggingLevel The logging level
-   */
-  public void setLogLevel(
-    final String loggerName,
-    final LogLevel loggingLevel) {
+    /**
+     * Set logging level for logger.
+     * @param loggerName The logger name
+     * @param loggingLevel The logging level
+     */
+    public void setLogLevel(
+        final String loggerName,
+        final LogLevel loggingLevel)  {
+
         LoggerRegistry.get().setLoggingLevel((loggerName == null) ? ROOT_LOGGER_NAME : loggerName, loggingLevel);
-  }
+    }
 
-  /**
-   * Get logger configurations.
-   * @return The list of logger configurations
-   */
-  public List<LoggerConfiguration> getLoggerConfigurations(){
-    return Collections.emptyList();
-  }
+    /**
+     * Get logger configurations.
+     * @return The list of logger configurations
+     */
+    public List<LoggerConfiguration> getLoggerConfigurations() {
+        return Collections.emptyList();
+    }
 
-  /**
-   * Get logger configuration.
-   * @param loggerName The logger name
-   * @return The logger configuration
-   */
-  public LoggerConfiguration getLoggerConfiguration(
-    final String loggerName){
-    return null;
-  }
+    /**
+     * Get logger configuration.
+     * @param loggerName The logger name
+     * @return The logger configuration
+     */
+    public LoggerConfiguration getLoggerConfiguration(
+        final String loggerName) {
+        return null;
+    }
 
 }

@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.util.resilience;
 
@@ -21,12 +21,12 @@ package org.melior.util.resilience;
  * @see Runnable
  */
 @FunctionalInterface
-public interface NoReturnCallable<V>{
+public interface NoReturnCallable<V> {
 
-  /**
-   * Computes a result, or throws an exception if unable to do so.
-   * @throws Exception if unable to compute a result
-   */
-  void call() throws Exception;
+    /**
+     * Computes a result, or throws an exception if unable to do so.
+     * @throws Exception if unable to compute a result
+     */
+    void call() throws Exception;
 
 }

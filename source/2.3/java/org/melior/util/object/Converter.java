@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.util.object;
 
@@ -14,14 +14,14 @@ package org.melior.util.object;
  * @since 2.3
  */
 @FunctionalInterface
-public interface Converter<T, U>{
+public interface Converter<T, U> {
 
-  /**
-   * Convert from one type of object to another.
-   * @param obj The input object
-   * @return The output object
-   */
-  public U convert(
-    final T obj);
+    /**
+     * Convert from one type of object to another.
+     * @param obj The input object
+     * @return The output object
+     */
+    public U convert(
+        final T obj);
 
 }

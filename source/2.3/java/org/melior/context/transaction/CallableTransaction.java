@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.context.transaction;
 import java.util.UUID;
@@ -17,37 +17,40 @@ import java.util.concurrent.Callable;
  * @author Melior
  * @since 2.3
  */
-public class CallableTransaction<T> implements Callable<T>{
+public class CallableTransaction<T> implements Callable<T> {
+
     private Callable<T> callable;
 
-  /**
-   * Constructor.
-   * @param callable The callable
-   */
-  CallableTransaction(
-    final Callable<T> callable){
+    /**
+     * Constructor.
+     * @param callable The callable
+     */
+    CallableTransaction(
+        final Callable<T> callable) {
+
         super();
 
         this.callable = callable;
-  }
+    }
 
-  /**
-   * Call callable.
-   * @throws Exception if unable to call the callable
-   */
-  public T call() throws Exception{
+    /**
+     * Call callable.
+     * @throws Exception if unable to call the callable
+     */
+    public T call() throws Exception {
+
         TransactionContext transactionContext;
-    T result;
+        T result;
 
         transactionContext = TransactionContext.get();
-    transactionContext.startTransaction();
-    transactionContext.setTransactionId(UUID.randomUUID().toString());
+        transactionContext.startTransaction();
+        transactionContext.setTransactionId(UUID.randomUUID().toString());
 
         result = callable.call();
 
         transactionContext.reset();
 
-    return result;
-  }
+        return result;
+    }
 
 }

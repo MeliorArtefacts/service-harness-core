@@ -1,10 +1,10 @@
-/* __  __    _ _      
-  |  \/  |  | (_)       
+/* __  __      _ _            
+  |  \/  |    | (_)           
   | \  / | ___| |_  ___  _ __ 
   | |\/| |/ _ \ | |/ _ \| '__|
   | |  | |  __/ | | (_) | |   
   |_|  |_|\___|_|_|\___/|_|   
-    Service Harness
+        Service Harness
 */
 package org.melior.util.string;
 
@@ -14,12 +14,12 @@ package org.melior.util.string;
  * @author Melior
  * @since 2.3
  */
-public interface CompactString {
+public interface CompactString  {
 
-  /**
-   * Returns a string representation of the object, in compact form.
-   * @return The compact string representation of the object
-   */
-  public String toCompactString();
+    /**
+     * Returns a string representation of the object, in compact form.
+     * @return The compact string representation of the object
+     */
+    public String toCompactString();
 
 }
