@@ -305,7 +305,7 @@ public class ClientConfig {
     /**
      * Set minimum number of connections.
      * @param minimumConnections The minimum number of connections
-     * @throws ApplicationException when the minimum number of connections is invalid
+     * @throws ApplicationException if the minimum number of connections is invalid
      */
     public void setMinimumConnections(
         final int minimumConnections) throws ApplicationException {
@@ -329,7 +329,7 @@ public class ClientConfig {
     /**
      * Set maximum number of connections.
      * @param maximumConnections The maximum number of connections
-     * @throws ApplicationException when the maximum number of connections is invalid
+     * @throws ApplicationException if the maximum number of connections is invalid
      */
     public void setMaximumConnections(
         final int maximumConnections) throws ApplicationException {

@@ -125,7 +125,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
     /**
      * Release connection from specified thread.
      * @param thread The thread that owns the connection
-     * @throws RemotingException when the connection has already been released
+     * @throws RemotingException if the connection has already been released
      */
     public void release(
         final Thread thread) throws RemotingException {
@@ -154,7 +154,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
 
     /**
      * Open connection.
-     * @throws RemotingException when the open attempt fails
+     * @throws RemotingException if the open attempt fails
      */
     @SuppressWarnings("unchecked")
     public void open() throws RemotingException {
@@ -274,7 +274,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
      * @param method The method to invoke
      * @param methodArgs The arguments to invoke with
      * @return The result of the invocation
-     * @throws Throwable when the invocation fails
+     * @throws Throwable if the invocation fails
      */
     protected Object invoke(
         final Method method,
@@ -310,7 +310,7 @@ public abstract class Connection<C extends ClientConfig, T extends Connection<C,
      * @param successMessage The message to log on success
      * @param failureMessage The message to log on failure
      * @return The result of the invocation
-     * @throws Throwable when the invocation fails
+     * @throws Throwable if the invocation fails
      */
     protected Object invokeMeasured(
         final Method method,

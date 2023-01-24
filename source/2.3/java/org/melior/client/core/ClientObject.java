@@ -117,7 +117,7 @@ public abstract class ClientObject<C extends ClientConfig, T extends ExceptionTa
      * @param method The method to invoke
      * @param methodArgs The arguments to invoke with
      * @return The result of the invocation
-     * @throws Throwable when the invocation fails
+     * @throws Throwable if the invocation fails
      */
     protected Object invoke(
         final Method method,
@@ -153,7 +153,7 @@ public abstract class ClientObject<C extends ClientConfig, T extends ExceptionTa
      * @param successMessage The message to log on success
      * @param failureMessage The message to log on failure
      * @return The result of the invocation
-     * @throws Throwable when the invocation fails
+     * @throws Throwable if the invocation fails
      */
     protected Object invokeMeasured(
         final Method method,
