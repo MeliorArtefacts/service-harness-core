@@ -117,4 +117,48 @@ public interface ClientSSLContext {
         return sslContext;
     }
 
+    /**
+     * Create SSL context that uses configured key store and trust store.
+     * @param protocol The protocol to support
+     * @param clientConfig The configuration
+     * @param keyStore The key store
+     * @param trustStore The trust store
+     * @return The SSL context
+     */
+    public static SSLContext ofKeyStore(
+        final String protocol,
+        final ClientConfig clientConfig,
+        final KeyStore keyStore,
+        final KeyStore trustStore) {
+
+        KeyManagerFactory keyManagerFactory = null;
+        TrustManagerFactory trustManagerFactory = null;
+        SSLContext sslContext;
+
+        try {
+
+            if (keyStore != null) {
+
+                keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+                keyManagerFactory.init(keyStore, StringUtil.toCharArray(ObjectUtil.coalesce(
+                    clientConfig.getKeyPassword(), clientConfig.getKeyStorePassword(), "")));
+            }
+
+            if (trustStore != null) {
+
+                trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                trustManagerFactory.init(trustStore);
+            }
+
+            sslContext = SSLContext.getInstance(protocol);
+            sslContext.init((keyManagerFactory == null) ? null : keyManagerFactory.getKeyManagers(),
+                (trustManagerFactory == null) ? null : trustManagerFactory.getTrustManagers(), new SecureRandom());
+        }
+        catch (Exception exception) {
+            throw new RuntimeException("Failed to create SSL context: " + exception.getMessage(), exception);
+        }
+
+        return sslContext;
+    }
+
 }

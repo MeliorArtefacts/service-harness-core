@@ -38,9 +38,8 @@ public interface StringUtil {
 
     /**
      * Return substring of string between opening token and closing token.
-     * If the string is {@code null} or the opening token is
-     * {@code null} or the closing token is {@code null} the
-     * result is {@code null}.
+     * If the string is {@code null} or the opening token is {@code null}
+     * or the closing token is {@code null} the result is {@code null}.
      * @param string The string
      * @param open The opening token
      * @param close The closing token
@@ -75,6 +74,48 @@ public interface StringUtil {
         }
 
         return result;
+    }
+
+    /**
+      * Return substring of string preceding token.
+     * If the string is {@code null} or the token is {@code null}
+     * the result is {@code null}.
+     * @param string The string
+     * @param token The token
+     * @return The substring, or {@code null} if the token is not present
+     */
+    public static String substringBefore(
+        final String string,
+        final String token) {
+
+        int index;
+
+        if ((string == null) || (token == null)) {
+            return null;
+        }
+
+        return ((index = string.indexOf(token)) == -1) ? null : string.substring(0, index);
+    }
+
+    /**
+      * Return substring of string following token.
+     * If the string is {@code null} or the token is {@code null}
+     * the result is {@code null}.
+     * @param string The string
+     * @param token The token
+     * @return The substring, or {@code null} if the token is not present
+     */
+    public static String substringAfter(
+        final String string,
+        final String token) {
+
+        int index;
+
+        if ((string == null) || (token == null)) {
+            return null;
+        }
+
+        return ((index = string.indexOf(token)) == -1) ? null : string.substring(index + token.length());
     }
 
     /**

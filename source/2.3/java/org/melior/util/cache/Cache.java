@@ -10,7 +10,7 @@ package org.melior.util.cache;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Create caches of simple, LRU and timed variety.
+ * Create caches of simple, LRU, timed and auto-refresh variety.
  * @author Melior
  * @since 2.3
  */

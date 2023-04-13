@@ -38,12 +38,11 @@ public class HttpHeader extends Attribute {
     public static HttpHeader[] collect(
         final String... parts) {
 
-        int size = parts.length / 2;
         List<HttpHeader> headers;
 
-        headers = new ArrayList<HttpHeader>(size);
+        headers = new ArrayList<HttpHeader>(parts.length / 2);
 
-        for (int i = 0; i < size; i+=2) {
+        for (int i = 0; i < parts.length; i+=2) {
             headers.add(new HttpHeader(parts[i], parts[i + 1]));
         }
 
