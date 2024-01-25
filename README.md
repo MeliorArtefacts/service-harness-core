@@ -149,4 +149,6 @@ Various utilities are available, most of which are used in the Melior modules th
 [**Melior Service Harness :: JMS : ActiveMQ**](https://github.com/MeliorArtefacts/service-harness-jms-activemq) - ActiveMQ client.  
 [**Melior Service Harness :: AMQP : RabbitMQ**](https://github.com/MeliorArtefacts/service-harness-amqp-rabbitmq) - RabbitMQ client.  
 [**Melior Service Harness :: Legacy : CORBA**](https://github.com/MeliorArtefacts/service-harness-legacy-corba) - Legacy CORBA client.  
-[**Melior Service Harness :: Kafka**](https://github.com/MeliorArtefacts/service-harness-kafka) - Kafka client.  
+[**Melior Service Harness :: Kafka**](https://github.com/MeliorArtefacts/service-harness-kafka) - Kafka client, Kafka listener and Kafka service harness.  
+[**Melior Service Harness :: SMPP**](https://github.com/MeliorArtefacts/service-harness-smpp) - SMPP client.  
+[**Melior Service Harness :: Config**](https://github.com/MeliorArtefacts/service-harness-config) - Spring Cloud Config Server extended client.  
